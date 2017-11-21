@@ -1,0 +1,57 @@
+<div class="mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+    
+    <!--- Note that these columns can be defined in any order.
+      The actual rendered columns are set as a property on the row definition" -->
+      
+      <!-- Position Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Przedmiot </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.name}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="total">
+          <mat-header-cell *matHeaderCellDef> Liczba godzin </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+              <mat-form-field>
+                  <input matInput placeholder="Godziny" [(ngModel)]="element.total" />
+                </mat-form-field>
+          </mat-cell>
+        </ng-container>
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="proffessors">
+        <mat-header-cell *matHeaderCellDef> Prowadzący </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutAlign="start center">
+          <mat-chip-list #chipList [selectable]="false">
+            <mat-chip *ngFor="let professor of element.professors; let i = index"
+            [removable]="true" (remove)="remove(element, i)" (select)="editProfessor(element, professor)">
+            {{professor.name}} | {{professor.hours}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+        <!-- <mat-form-field>
+          <input matInput placeholder="Nowy"
+          [matChipInputFor]="chipList"
+          [matChipInputAddOnBlur]="true"
+          (matChipInputTokenEnd)="add($event)" />
+        </mat-form-field> -->
+        <button mat-icon-button color="primary" (click)="addProfessor(element)">
+            <mat-icon aria-label="Dodaj prowadzącego">add</mat-icon>
+          </button>
+      </mat-cell>
+    </ng-container>
+    
+    <!-- Weight Column -->
+    <ng-container matColumnDef="hours">
+      <mat-header-cell *matHeaderCellDef> Liczba godzin </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+       {{element.hours}} / {{element.total}}
+      </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
