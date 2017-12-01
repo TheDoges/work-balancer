@@ -7,6 +7,8 @@ import { WebsocketService } from './shared/services/websocket.service';
 import { HeaderComponent } from './shared/layout/header.component';
 import { SharedModule } from './shared/shared.module';
 import { PlanningModule } from './planning/planning.module';
+import { ProfessorService } from './shared/services/professor.service';
+import { ClassService } from './shared/services/class.service';
 
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([
   { path: '', redirectTo: '/planning', pathMatch: 'full' }
@@ -25,7 +27,9 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([
   ],
   providers: [
     ApiService,
-    WebsocketService
+    WebsocketService,
+    ProfessorService,
+    ClassService
   ],
   bootstrap: [AppComponent]
 })

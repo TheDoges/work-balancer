@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Professor } from '../planning-table/planning-table.component';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import Professor from '../../shared/models/professor';
 
 @Component({
   selector: 'app-professor-select',
@@ -14,16 +14,10 @@ export class ProfessorSelectComponent {
   professorCtrl: FormControl;
   filteredProfessors: Observable<any[]>;
 
-  professors: any[] = [
-    {name: 'Wow1', hours: 10},
-    {name: 'Wow2', hours: 20},
-    {name: 'Wow3', hours: 30},
-    {name: 'Wow4', hours: 40},
-    {name: 'Wow5', hours: 50},
-    {name: 'Wow6', hours: 60},
-  ];
+  professors: Professor[];
 
   constructor( public dialogRef: MatDialogRef<ProfessorSelectComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.professors = data.professors;
     this.professorCtrl = new FormControl();
     this.filteredProfessors = this.professorCtrl.valueChanges
         .startWith(null)
@@ -39,7 +33,7 @@ export class ProfessorSelectComponent {
       professor.name.toLowerCase().indexOf(name.toLowerCase()) > -1);
   }
 
-  formatProfessor(professor) {
+  formatProfessor(professor: Professor) {
     return professor ? professor.name : '';
   }
 }

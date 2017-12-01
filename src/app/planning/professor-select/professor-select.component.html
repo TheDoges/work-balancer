@@ -1,12 +1,20 @@
-<form (submit)="closeDialog(data)">
+<form (submit)="closeDialog(data)" fxLayout="column">
   <mat-form-field>
-    <input matInput placeholder="Prowadzący" [matAutocomplete]="auto" [formControl]="professorCtrl" [(ngModel)]="data.professor">
+    <input matInput placeholder="Prowadzący" [matAutocomplete]="auto" [formControl]="professorCtrl" [(ngModel)]="data.job.professor">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="formatProfessor">
       <mat-option *ngFor="let professor of filteredProfessors | async" [value]="professor">
         <span>{{ professor.name }}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <button mat-raised-button [mat-dialog-close]=null tabindex="2">Anuluj</button>
-  <button type="submit" mat-raised-button color="primary" tabindex="-1">Dodaj</button>
+  <mat-slider
+    [max]="data.max"
+    [min]="0"
+    [thumb-label]="true"
+    [tick-interval]="10"
+    name="hours"
+    [(ngModel)]="data.job.hours">
+  </mat-slider>
+  <button type="submit" mat-raised-button color="primary">Dodaj</button>
+  <button mat-raised-button [mat-dialog-close]=null >Anuluj</button>
 </form>

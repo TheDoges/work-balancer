@@ -2,3 +2,11 @@
 .mat-header-cell:nth-child(3) {
     flex: 10;
 }
+
+.warn {
+    color: red;
+}
+
+mat-row.highlight {
+    background-color: rgba(200, 200, 200, 0.3);
+}

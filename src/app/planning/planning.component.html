@@ -1,26 +1,36 @@
-<mat-accordion>
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Studia inżynierskie
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <app-planning-table></app-planning-table>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Studia magisterskie
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <app-planning-table></app-planning-table>    
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Studia doktoranckie
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <app-planning-table></app-planning-table>
-  </mat-expansion-panel>
-</mat-accordion>
+<mat-sidenav-container>
+  <mat-sidenav-content>
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Studia inżynierskie
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-planning-table [professors]="professors" [classes]="classes" (lectureChange)="setLecture($event)"></app-planning-table>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Studia magisterskie
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-planning-table [professors]="professors" [classes]="classes" (lectureChange)="setLecture($event)"></app-planning-table>    
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Studia doktoranckie
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-planning-table [professors]="professors" [classes]="classes" (lectureChange)="setLecture($event)"></app-planning-table>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-sidenav-content>
+  <mat-sidenav #sideNav mode="side" position="end" class="mat-elevation-z8">
+    {{lecture.name}}
+    <mat-list>
+        <mat-list-item *ngFor="let job of lecture.jobs"> {{ job.professor.name }} </mat-list-item>
+     </mat-list>
+  </mat-sidenav>  
+</mat-sidenav-container>
