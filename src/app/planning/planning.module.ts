@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { PlanningTableComponent } from './planning-table/planning-table.component';
 import { ProfessorSelectComponent } from './professor-select/professor-select.component';
+import { ProfessorInfoComponent } from './professor-info/professor-info.component';
 
 const planningRouting: ModuleWithProviders = RouterModule.forChild([
   {
@@ -26,7 +27,8 @@ const planningRouting: ModuleWithProviders = RouterModule.forChild([
   declarations: [
     PlanningComponent,
     PlanningTableComponent,
-    ProfessorSelectComponent
+    ProfessorSelectComponent,
+    ProfessorInfoComponent
   ]
 })
 export class PlanningModule { }

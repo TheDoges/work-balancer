@@ -1,0 +1,8 @@
+{{professor.hours}} / {{professor.minimum}}
+<mat-chip-list #chipList [selectable]="true">
+  <mat-chip *ngFor="let job of professor.jobs; let i = index" [selectable]="true"
+  [removable]="true" (remove)="removeJob(i, job)">
+  {{job.class.name}} | {{job.hours}}
+  <mat-icon matChipRemove>cancel</mat-icon>
+</mat-chip>
+</mat-chip-list>

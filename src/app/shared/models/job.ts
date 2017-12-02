@@ -3,6 +3,7 @@ import { Serializable } from '../interfaces/Serializable';
 import Professor from './professor';
 export default class Job implements Serializable<Job> {
     professor: Professor;
+    class: Class;
     hours: number;
 
     deserialize(input: any): Job {

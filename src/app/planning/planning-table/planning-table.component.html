@@ -26,7 +26,7 @@
         <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutAlign="start center">
           <mat-chip-list #chipList [selectable]="true">
             <mat-chip *ngFor="let job of element.jobs; let i = index" [selectable]="true"
-            [removable]="true" (remove)="removeJob(element, i)" (click)="editJob(element, i, job)">
+            [removable]="true" (remove)="removeJob(element, i, job)" (click)="editJob(element, i, job)">
             {{job.professor.name}} | {{job.hours}}
             <mat-icon matChipRemove>cancel</mat-icon>
           </mat-chip>

@@ -29,9 +29,14 @@ export default class Class implements Serializable<Class> {
         this.hours += job.hours;
     }
 
-    deleteJob(index: number) {
-        this.hours -= this.jobs[index].hours;
-        this.jobs.splice(index, 1);
+    deleteJob(job: number | Job) {
+        if (job instanceof Job) {
+            this.hours -= job.hours;
+            this.jobs = this.jobs.filter(item => item !== job);
+        } else {
+            this.hours -= this.jobs[job].hours;
+            this.jobs.splice(job, 1);
+        }
     }
 
     updateJob(index: number, job: Job) {

@@ -27,12 +27,14 @@ export class PlanningTableComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Lecture>(this.classes);
   }
 
-  removeJob(lecture: Lecture, index: number) {
+  removeJob(lecture: Lecture, index: number, job: Job) {
     lecture.deleteJob(index);
+    job.professor.deleteJob(job);
   }
 
   addJob(lecture: Lecture) {
     const job: Job = new Job();
+    job.class = lecture;
     job.hours = 0;
     const dialogRef = this.dialog.open(ProfessorSelectComponent, {
       data: {
@@ -44,6 +46,7 @@ export class PlanningTableComponent implements OnInit {
     dialogRef.afterClosed().subscribe(data => {
       if (data) {
         lecture.addJob(data.job);
+        data.job.professor.addJob(data.job);
       }
     });
   }
@@ -59,6 +62,8 @@ export class PlanningTableComponent implements OnInit {
     dialogRef.afterClosed().subscribe(data => {
       if (data) {
         lecture.updateJob(index, data.job);
+        job.professor.deleteJob(job);
+        data.job.professor.addJob(data.job);
       }
     });
   }

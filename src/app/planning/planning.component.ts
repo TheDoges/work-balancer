@@ -11,7 +11,8 @@ import { ClassService } from '../shared/services/class.service';
 })
 export class PlanningComponent implements OnInit {
 
-  professors: Professor[] = [];
+  private professors: Professor[] = [];
+  filteredProfessors: Professor[] = [];
   classes: Class[] = [];
   lecture: Class = new Class();
 
@@ -20,13 +21,18 @@ export class PlanningComponent implements OnInit {
   constructor(private professorService: ProfessorService, private classService: ClassService) { }
 
   ngOnInit() {
-    this.professors = this.professorService.getAll();
+    this.filteredProfessors = this.professors = this.professorService.getAll();
     this.classes = this.classService.getAll();
   }
 
   setLecture(lecture: Class) {
     this.lecture = lecture;
+    this.sideNav.close();
     this.sideNav.open();
+  }
+
+  filterProfessors(query: string) {
+    this.filteredProfessors = this.professors.filter(professor => professor.name.includes(query));
   }
 
 }
