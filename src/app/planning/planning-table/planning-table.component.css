@@ -10,3 +10,7 @@
 mat-row.highlight {
     background-color: rgba(200, 200, 200, 0.3);
 }
+
+mat-cell mat-form-field {
+    width: 100%;
+}

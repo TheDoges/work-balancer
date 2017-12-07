@@ -1,5 +1,6 @@
 mat-sidenav {
     width: 15vw;
+    top: 64px;
 }
 
 .professor-filter {

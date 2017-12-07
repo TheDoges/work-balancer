@@ -3,6 +3,7 @@ import { ProfessorService } from '../shared/services/professor.service';
 import Professor from '../shared/models/professor';
 import Class from '../shared/models/class';
 import { ClassService } from '../shared/services/class.service';
+import { MatSidenav } from '@angular/material';
 
 @Component({
   selector: 'app-planning',
@@ -14,9 +15,9 @@ export class PlanningComponent implements OnInit {
   private professors: Professor[] = [];
   filteredProfessors: Professor[] = [];
   classes: Class[] = [];
-  lecture: Class = new Class();
+  lecture: Class;
 
-  @ViewChild('sideNav') sideNav;
+  @ViewChild('sideNav') sideNav: MatSidenav;
 
   constructor(private professorService: ProfessorService, private classService: ClassService) { }
 

@@ -1,8 +1,14 @@
-{{professor.hours}} / {{professor.minimum}}
-<mat-chip-list #chipList [selectable]="true">
-  <mat-chip *ngFor="let job of professor.jobs; let i = index" [selectable]="true"
-  [removable]="true" (remove)="removeJob(i, job)">
-  {{job.class.name}} | {{job.hours}}
-  <mat-icon matChipRemove>cancel</mat-icon>
-</mat-chip>
-</mat-chip-list>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title fxLayout="row" fxLayoutAlign="space-between">
+      <span>{{professor.name}}</span>
+      <span [ngClass]="{'warn': professor.hours < professor.minimum}">{{professor.hours}}/{{professor.minimum}}</span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <mat-chip-list #chipList [selectable]="true">
+    <mat-chip *ngFor="let job of professor.jobs; let i = index" [selectable]="true" [removable]="true" (remove)="removeJob(i, job)">
+      {{job.class.name}} | {{job.hours}}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
+</mat-expansion-panel>

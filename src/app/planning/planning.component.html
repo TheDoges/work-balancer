@@ -27,39 +27,34 @@
       </mat-expansion-panel>
     </mat-accordion>
   </mat-sidenav-content>
-  <mat-sidenav #sideNav mode="side" position="end" class="mat-elevation-z8" fixedInViewport="true">
-    <mat-toolbar>{{lecture.name}}</mat-toolbar>
-    <mat-list>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            2015/2016
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        Lista prowadzących
-      </mat-expansion-panel>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            2016/2017
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        Lista prowadzących
-      </mat-expansion-panel>
-    </mat-list>
+  <mat-sidenav #sideNav mode="side" position="end" class="mat-elevation-z8" fixedInViewport="true" fixedTopGap="64" opened="true">
+    <div *ngIf="lecture">
+      <mat-toolbar>{{lecture.name}}</mat-toolbar>
+      <mat-list>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              2015/2016
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          Lista prowadzących
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              2016/2017
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          Lista prowadzących
+        </mat-expansion-panel>
+      </mat-list>
+    </div>
     <mat-toolbar>Prowadzący</mat-toolbar>
     <mat-form-field class="professor-filter">
       <input matInput placeholder="Filtruj" (keyup)="filterProfessors($event.target.value)"/>
     </mat-form-field>
     <mat-accordion>
-      <mat-expansion-panel *ngFor="let professor of filteredProfessors">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{professor.name}} - {{professor.hours}}/{{professor.minimum}}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-professor-info [professor]="professor"></app-professor-info>
-      </mat-expansion-panel>
+      <app-professor-info *ngFor="let professor of filteredProfessors" [professor]="professor"></app-professor-info>
     </mat-accordion>
   </mat-sidenav>  
 </mat-sidenav-container>
