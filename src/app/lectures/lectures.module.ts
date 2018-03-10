@@ -1,7 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LecturesComponent } from './lectures.component';
+import { LecturesComponent, CapitalizePipe } from './lectures.component';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared';
 
 const lecturesRouting: ModuleWithProviders = RouterModule.forChild([
   {
@@ -14,8 +15,11 @@ const lecturesRouting: ModuleWithProviders = RouterModule.forChild([
 @NgModule({
   imports: [
     lecturesRouting,
-    CommonModule
+    SharedModule
   ],
-  declarations: [LecturesComponent]
+  declarations: [
+    LecturesComponent,
+    CapitalizePipe
+  ]
 })
 export class LecturesModule { }

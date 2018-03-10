@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfessorsComponent } from './professors.component';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared';
 
 const professorsRouting: ModuleWithProviders = RouterModule.forChild([
   {
@@ -14,7 +15,7 @@ const professorsRouting: ModuleWithProviders = RouterModule.forChild([
 @NgModule({
   imports: [
     professorsRouting,
-    CommonModule
+    SharedModule
   ],
   declarations: [ProfessorsComponent]
 })

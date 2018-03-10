@@ -1,3 +1,135 @@
-<p>
-  lectures works!
-</p>
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Przedmiot </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="study">
+      <mat-header-cell *matHeaderCellDef> Kierunek </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.study.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="studyForm">
+      <mat-header-cell *matHeaderCellDef> Tryb studiów </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.studyForm.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="studyKind">
+      <mat-header-cell *matHeaderCellDef> Rodzaj studiów </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.studyKind.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="options">
+      <mat-header-cell *matHeaderCellDef> Opcje </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <button mat-button (click)="editLecture(element, $event, i)">Click me!</button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nameEdit">
+      <mat-header-cell *matHeaderCellDef> Przedmiot </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput [(ngModel)]="element.name"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="studyEdit">
+      <mat-header-cell *matHeaderCellDef> Kierunek </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <mat-select [(ngModel)]="element.study">
+            <mat-option *ngFor="let study of studies" [value]="study">
+              {{ study.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="studyFormEdit">
+      <mat-header-cell *matHeaderCellDef> Tryb studiów </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <mat-select [(ngModel)]="element.studyForm">
+            <mat-option *ngFor="let studyForm of studyForms" [value]="studyForm">
+              {{ studyForm.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="studyKindEdit">
+      <mat-header-cell *matHeaderCellDef> Rodzaj studiów </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <mat-select [(ngModel)]="element.studyKind">
+            <mat-option *ngFor="let studyKind of studyKinds" [value]="studyKind">
+              {{ studyKind.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let detail"> 
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Company (disabled)" disabled value="Google">
+          </mat-form-field>
+        
+          <table class="example-full-width" cellspacing="0"><tr>
+            <td><mat-form-field class="example-full-width">
+              <input matInput placeholder="First name" name="name" [(ngModel)]=detail.name>
+            </mat-form-field></td>
+            <td><mat-form-field class="example-full-width">
+              <input matInput placeholder="Long Last Name That Will Be Truncated">
+            </mat-form-field></td>
+          </tr></table>
+        
+          <p>
+            <mat-form-field class="example-full-width">
+              <textarea matInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <textarea matInput placeholder="Address 2"></textarea>
+            </mat-form-field>
+          </p>
+        
+          <table class="example-full-width" cellspacing="0"><tr>
+            <td><mat-form-field class="example-full-width">
+              <input matInput placeholder="City">
+            </mat-form-field></td>
+            <td><mat-form-field class="example-full-width">
+              <input matInput placeholder="State">
+            </mat-form-field></td>
+            <td><mat-form-field class="example-full-width">
+              <input matInput #postalCode maxlength="5" placeholder="Postal Code" value="94043">
+              <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+            </mat-form-field></td>
+          </tr></table>
+        </form>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="['name', 'study', 'studyForm', 'studyKind', 'options']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name', 'study', 'studyForm', 'studyKind', 'options'];"
+            matRipple 
+            class="element-row"  
+            [class.expanded]="expandedElement === row" 
+            (click)="expandedElement = expandedElement === row? null : row"
+            style="overflow: hidden">
+    </mat-row>
+    <mat-row *matRowDef="let row; columns: ['nameEdit', 'studyEdit', 'studyFormEdit', 'studyKindEdit']; when: isEditableRow"></mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+      [@detailExpand]="row.element === expandedElement ? 'expanded' : 'collapsed'"
+      style="overflow: hidden"> 
+</mat-row>
+</mat-table>
+  <button class="fab" type="button" mat-fab matTooltip="Dodaj przedmiot" matTooltipPosition="left" (click)="addLecture()"><mat-icon>add</mat-icon></button>
+</div>

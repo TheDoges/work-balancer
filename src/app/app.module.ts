@@ -9,8 +9,12 @@ import { SharedModule } from './shared/shared.module';
 import { PlanningModule } from './planning/planning.module';
 import { ProfessorService } from './shared/services/professor.service';
 import { ClassService } from './shared/services/class.service';
+import { StudyService } from './shared/services/study.service';
+import { StudyKindService } from './shared/services/study-kind.service';
+import { StudyFormService } from './shared/services/study-form.service';
 import { ProfessorsModule } from './professors/professors.module';
 import { LecturesModule } from './lectures/lectures.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 enableProdMode();
 
@@ -29,13 +33,17 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([
     rootRouting,
     PlanningModule,
     ProfessorsModule,
+    BrowserAnimationsModule,
     LecturesModule
   ],
   providers: [
     ApiService,
     WebsocketService,
     ProfessorService,
-    ClassService
+    ClassService,
+    StudyFormService,
+    StudyKindService,
+    StudyService
   ],
   bootstrap: [AppComponent]
 })
