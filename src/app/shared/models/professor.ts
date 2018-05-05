@@ -1,6 +1,6 @@
 import Job from './job';
 import { Serializable } from '../interfaces/Serializable';
-export default class Professor implements Serializable<Professor> {
+export default class Professor implements Serializable<Professor, any, any> {
     name: string;
     jobs: Job[] = [];
     hours = 0;

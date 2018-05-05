@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import Professor from '../../shared/models/professor';
+import { Lecturer } from '../../shared/models/lecturer';
 
 @Component({
   selector: 'app-professor-select',
@@ -14,14 +15,14 @@ export class ProfessorSelectComponent {
   professorCtrl: FormControl;
   filteredProfessors: Observable<any[]>;
 
-  professors: Professor[];
+  lecturers: Lecturer[];
 
   constructor( public dialogRef: MatDialogRef<ProfessorSelectComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.professors = data.professors;
+    this.lecturers = data.lecturers;
     this.professorCtrl = new FormControl();
     this.filteredProfessors = this.professorCtrl.valueChanges
         .startWith(null)
-        .map(professor => professor ? this.filterProfessors(professor.name || professor) : this.professors.slice());
+        .map(lecturer => lecturer ? this.filterProfessors(lecturer.name || lecturer) : this.lecturers.slice());
   }
 
   closeDialog(data) {
@@ -29,11 +30,11 @@ export class ProfessorSelectComponent {
   }
 
   filterProfessors(name: string) {
-    return this.professors.filter(professor =>
-      professor.name.toLowerCase().indexOf(name.toLowerCase()) > -1);
+    return this.lecturers.filter(lecturer =>
+      lecturer.name.toLowerCase().indexOf(name.toLowerCase()) > -1);
   }
 
-  formatProfessor(professor: Professor) {
-    return professor ? professor.name : '';
+  formatProfessor(lecturer: Lecturer) {
+    return lecturer ? lecturer.surname + lecturer.name: '';
   }
 }

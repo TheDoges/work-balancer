@@ -1,7 +1,7 @@
 import Class from './class';
 import { Serializable } from '../interfaces/Serializable';
 import Professor from './professor';
-export default class Job implements Serializable<Job> {
+export default class Job implements Serializable<Job, any, any> {
     professor: Professor;
     class: Class;
     hours: number;

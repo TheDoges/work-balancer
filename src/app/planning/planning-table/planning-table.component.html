@@ -15,7 +15,7 @@
           <mat-header-cell *matHeaderCellDef> Liczba godzin </mat-header-cell>
           <mat-cell *matCellDef="let element">
               <mat-form-field>
-                  <input matInput [(ngModel)]="element.total" type="number"/>
+                  <input matInput [(ngModel)]="element.hours" type="number"/>
                 </mat-form-field>
           </mat-cell>
         </ng-container>
@@ -25,9 +25,9 @@
         <mat-header-cell *matHeaderCellDef> Prowadzący </mat-header-cell>
         <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutAlign="start center">
           <mat-chip-list #chipList [selectable]="true">
-            <mat-chip *ngFor="let job of element.jobs; let i = index" [selectable]="true"
-            [removable]="true" (remove)="removeJob(element, i, job)" (click)="editJob(element, i, job)">
-            {{job.professor.name}} | {{job.hours}}
+            <mat-chip *ngFor="let link of element.links; let i = index" [selectable]="true"
+            [removable]="true" (remove)="removeLink(element, i, link)" (click)="editLink(element, i, link)">
+            {{link.lecturer.surname}} {{link.lecturer.name}} | {{link.hours}}
             <mat-icon matChipRemove>cancel</mat-icon>
           </mat-chip>
         </mat-chip-list>
@@ -37,7 +37,7 @@
           [matChipInputAddOnBlur]="true"
           (matChipInputTokenEnd)="add($event)" />
         </mat-form-field> -->
-        <button mat-icon-button color="primary" (click)="addJob(element)">
+        <button mat-icon-button color="primary" (click)="addLink(element)">
             <mat-icon aria-label="Dodaj prowadzącego">add</mat-icon>
           </button>
       </mat-cell>
@@ -46,12 +46,12 @@
     <!-- Weight Column -->
     <ng-container matColumnDef="hours">
       <mat-header-cell *matHeaderCellDef> Liczba godzin </mat-header-cell>
-      <mat-cell *matCellDef="let element" [ngClass]="{'warn': element.hours !== element.total}">
-       {{element.hours}} / {{element.total}}
+      <mat-cell *matCellDef="let element" [ngClass]="{'warn': element.linkHours !== element.hours}">
+       {{element.linkHours}} / {{element.hours}}
       </mat-cell>
     </ng-container>
     
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'highlight': selectedClassId === row.name}" (click)="selectClass(row)"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'highlight': selectedClassId === row.name}" (click)="selectSubject(row)"></mat-row>
   </mat-table>
 </div>

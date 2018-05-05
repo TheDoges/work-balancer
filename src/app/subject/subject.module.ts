@@ -1,25 +1,24 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LecturesComponent, CapitalizePipe } from './lectures.component';
+import { SubjectComponent } from './subject.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
 
-const lecturesRouting: ModuleWithProviders = RouterModule.forChild([
+const subjectrouting: ModuleWithProviders = RouterModule.forChild([
   {
-    path: 'lectures',
-    component: LecturesComponent
+    path: 'subjects',
+    component: SubjectComponent
     // canActivate: [AuthGuardService]
   }
 ]);
 
 @NgModule({
   imports: [
-    lecturesRouting,
+    subjectrouting,
     SharedModule
   ],
   declarations: [
-    LecturesComponent,
-    CapitalizePipe
+    SubjectComponent
   ]
 })
-export class LecturesModule { }
+export class SubjectModule { }

@@ -1,22 +1,22 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfessorsComponent } from './professors.component';
+import { LecturerComponent } from './lecturer.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
 
-const professorsRouting: ModuleWithProviders = RouterModule.forChild([
+const lecturerRouting: ModuleWithProviders = RouterModule.forChild([
   {
-    path: 'professors',
-    component: ProfessorsComponent
+    path: 'lecturers',
+    component: LecturerComponent
     // canActivate: [AuthGuardService]
   }
 ]);
 
 @NgModule({
   imports: [
-    professorsRouting,
+    lecturerRouting,
     SharedModule
   ],
-  declarations: [ProfessorsComponent]
+  declarations: [LecturerComponent]
 })
-export class ProfessorsModule { }
+export class LecturerModule { }

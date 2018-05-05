@@ -7,15 +7,15 @@
             Studia inżynierskie
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-planning-table [professors]="professors" [classes]="classes" (lectureChange)="setLecture($event)"></app-planning-table>
+        <app-planning-table [lecturers]="lecturers" [subjects] = "subjects" (subjectChange)="setSubject($event)"></app-planning-table>
       </mat-expansion-panel>
-      <mat-expansion-panel>
+      <!-- <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
             Studia magisterskie
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-planning-table [professors]="professors" [classes]="classes" (lectureChange)="setLecture($event)"></app-planning-table>    
+        <app-planning-table [lecturers]="lecturers" (lectureChange)="setSubject($event)"></app-planning-table>    
       </mat-expansion-panel>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -23,8 +23,8 @@
             Studia doktoranckie
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-planning-table [professors]="professors" [classes]="classes" (lectureChange)="setLecture($event)"></app-planning-table>
-      </mat-expansion-panel>
+        <app-planning-table [lecturers]="lecturers" (lectureChange)="setSubject($event)"></app-planning-table>
+      </mat-expansion-panel> -->
     </mat-accordion>
     <fab-speed-dial direction="up">
       <button type="button" mat-fab fab-toggle matTooltip="Akcje" matTooltipPosition="left"><mat-icon>menu</mat-icon></button>
@@ -34,8 +34,8 @@
     </fab-speed-dial>
   </mat-sidenav-content>
   <mat-sidenav #sideNav mode="side" position="end" class="mat-elevation-z8" fixedInViewport="true" fixedTopGap="64" opened="true">
-    <div *ngIf="lecture">
-      <mat-toolbar>{{lecture.name}}</mat-toolbar>
+    <div *ngIf="subject">
+      <mat-toolbar>{{subject.name}}</mat-toolbar>
       <mat-list>
         <mat-expansion-panel>
           <mat-expansion-panel-header>
@@ -57,10 +57,10 @@
     </div>
     <mat-toolbar>Prowadzący</mat-toolbar>
     <mat-form-field class="professor-filter">
-      <input matInput placeholder="Filtruj" (keyup)="filterProfessors($event.target.value)"/>
+      <input matInput placeholder="Filtruj" (keyup)="filterLecturers($event.target.value)"/>
     </mat-form-field>
     <mat-accordion>
-      <app-professor-info *ngFor="let professor of filteredProfessors" [professor]="professor"></app-professor-info>
+      <app-professor-info *ngFor="let lecturer of filteredLecturers" [lecturer]="lecturer"></app-professor-info>
     </mat-accordion>
-  </mat-sidenav>  
+  </mat-sidenav>
 </mat-sidenav-container>

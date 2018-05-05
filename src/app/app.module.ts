@@ -12,9 +12,14 @@ import { ClassService } from './shared/services/class.service';
 import { StudyService } from './shared/services/study.service';
 import { StudyKindService } from './shared/services/study-kind.service';
 import { StudyFormService } from './shared/services/study-form.service';
-import { ProfessorsModule } from './professors/professors.module';
-import { LecturesModule } from './lectures/lectures.module';
+import { LecturerModule } from './lecturer/lecturer.module';
+import { SubjectModule } from './subject/subject.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SubjectService } from './shared/services/subject.service';
+import { DegreeService } from './shared/services/degree.service';
+import { LecturerService } from './shared/services/lecturer.service';
+import { TitleService } from './shared/services/title.service';
+import { LinkService } from './shared/services/link.service';
 
 enableProdMode();
 
@@ -32,9 +37,9 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([
     SharedModule,
     rootRouting,
     PlanningModule,
-    ProfessorsModule,
+    LecturerModule,
     BrowserAnimationsModule,
-    LecturesModule
+    SubjectModule
   ],
   providers: [
     ApiService,
@@ -43,7 +48,12 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([
     ClassService,
     StudyFormService,
     StudyKindService,
-    StudyService
+    StudyService,
+    SubjectService,
+    DegreeService,
+    LecturerService,
+    TitleService,
+    LinkService
   ],
   bootstrap: [AppComponent]
 })

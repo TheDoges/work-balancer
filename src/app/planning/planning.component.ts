@@ -4,6 +4,10 @@ import Professor from '../shared/models/professor';
 import Class from '../shared/models/class';
 import { ClassService } from '../shared/services/class.service';
 import { MatSidenav } from '@angular/material';
+import { LecturerService } from '../shared/services/lecturer.service';
+import { Lecturer } from '../shared/models/lecturer';
+import { SubjectService } from '../shared/services/subject.service';
+import { Subject } from '../shared/models/subject';
 
 @Component({
   selector: 'app-planning',
@@ -12,28 +16,33 @@ import { MatSidenav } from '@angular/material';
 })
 export class PlanningComponent implements OnInit {
 
-  private professors: Professor[] = [];
-  filteredProfessors: Professor[] = [];
-  classes: Class[] = [];
-  lecture: Class;
+  private lecturers: Lecturer[] = [];
+  filteredLecturers: Lecturer[] = [];
+  subjects: Subject[] = [];
+  subject: Subject;
 
   @ViewChild('sideNav') sideNav: MatSidenav;
 
-  constructor(private professorService: ProfessorService, private classService: ClassService) { }
+  constructor(private lecturerService: LecturerService, private subjectService: SubjectService) { }
 
   ngOnInit() {
-    this.filteredProfessors = this.professors = this.professorService.getAll();
-    this.classes = this.classService.getAll();
+    this.lecturerService.getAll()
+    .subscribe(lecturers => {
+      this.lecturers = lecturers;
+      this.filteredLecturers = lecturers;
+    })
+    this.subjectService.getAll()
+    .subscribe(subjects => this.subjects = subjects)
   }
 
-  setLecture(lecture: Class) {
-    this.lecture = lecture;
+  setSubject(subject: Subject) {
+    this.subject = subject;
     this.sideNav.close();
     this.sideNav.open();
   }
 
-  filterProfessors(query: string) {
-    this.filteredProfessors = this.professors.filter(professor => professor.name.includes(query));
+  filterLecturers(query: string) {
+    this.filteredLecturers = this.lecturers.filter(lecturer => lecturer.name.includes(query));
   }
 
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import Professor from '../../shared/models/professor';
 import Job from '../../shared/models/job';
+import { Lecturer } from '../../shared/models/lecturer';
+import { Link } from '../../shared/models/link';
+import { LinkService } from '../../shared/services/link.service';
 
 @Component({
   selector: 'app-professor-info',
@@ -9,16 +12,15 @@ import Job from '../../shared/models/job';
 })
 export class ProfessorInfoComponent implements OnInit {
 
-  @Input() professor: Professor;
+  @Input() lecturer: Lecturer;
 
-  constructor() { }
+  constructor(private linkService: LinkService) { }
 
   ngOnInit() {
   }
 
-  removeJob(index: number, job: Job) {
-    this.professor.deleteJob(index);
-    job.class.deleteJob(job);
+  removeLink(index: number, link: Link) {
+    this.linkService.delete(link);
   }
 
 }

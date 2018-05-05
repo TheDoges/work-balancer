@@ -7,6 +7,11 @@ import { ProfessorSelectComponent } from '../professor-select/professor-select.c
 import Lecture from '../../shared/models/class';
 import Professor from '../../shared/models/professor';
 import Job from '../../shared/models/job';
+import { Lecturer } from '../../shared/models/lecturer';
+import { Subject } from '../../shared/models/subject';
+import { SubjectService } from '../../shared/services/subject.service';
+import { Link } from '../../shared/models/link';
+import { LinkService } from '../../shared/services/link.service';
 
 @Component({
   selector: 'app-planning-table',
@@ -14,63 +19,62 @@ import Job from '../../shared/models/job';
   styleUrls: ['./planning-table.component.css']
 })
 export class PlanningTableComponent implements OnInit {
-  @Input() professors: Professor[];
-  @Input() classes: Lecture[];
-  @Output() lectureChange: EventEmitter<Lecture> = new EventEmitter<Lecture>();
+  @Input() lecturers: Lecturer[];
+  @Input() subjects: Subject[];
+  @Output() subjectChange: EventEmitter<Subject> = new EventEmitter<Subject>();
   displayedColumns = ['name', 'total', 'proffessors', 'hours'];
-  dataSource: MatTableDataSource<Lecture>;
-  selectedClassId: string;
+  dataSource: MatTableDataSource<Subject>;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(private subjectService: SubjectService, private linkService: LinkService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<Lecture>(this.classes);
+    // this.dataSource = new MatTableDataSource<Subject>(this.subjects);
+    this.subjectService.getAllForSemester(null)
+    .subscribe(subjects => {
+      this.dataSource = new MatTableDataSource<Subject>(this.subjects);
+      this.subjects = subjects;
+    })
   }
 
-  removeJob(lecture: Lecture, index: number, job: Job) {
-    lecture.deleteJob(index);
-    job.professor.deleteJob(job);
+  removeLink(subject: Subject, index: number, link: Link) {
+    this.linkService.delete(link);
   }
 
-  addJob(lecture: Lecture) {
-    const job: Job = new Job();
-    job.class = lecture;
-    job.hours = 0;
+  addLink(subject: Subject) {
+    const link: Link = new Link();
+    link.subject = subject;
+    link.hours = 0;
     const dialogRef = this.dialog.open(ProfessorSelectComponent, {
       data: {
-        job: job,
-        professors: this.professors,
-        max: lecture.total - lecture.hours
+        link: link,
+        lecturers: this.lecturers,
+        max: subject.hours - subject.linkHours
       }
     });
     dialogRef.afterClosed().subscribe(data => {
       if (data) {
-        lecture.addJob(data.job);
-        data.job.professor.addJob(data.job);
+        this.linkService.add(data.link, subject, data.link.lecturer);
       }
     });
   }
 
-  editJob(lecture: Lecture, index: number, job: Job) {
+  editLink(subject: Subject, index: number, link: Link) {
     const dialogRef = this.dialog.open(ProfessorSelectComponent, {
       data: {
-        job: {...job},
-        professors: this.professors,
-        max: lecture.total - lecture.hours + job.hours
+        link: {...link},
+        lecturers: this.lecturers,
+        max: subject.hours - subject.linkHours + link.hours
       }
     });
     dialogRef.afterClosed().subscribe(data => {
       if (data) {
-        lecture.updateJob(index, data.job);
-        job.professor.deleteJob(job);
-        data.job.professor.addJob(data.job);
+        this.linkService.update(data.link, subject, link.lecturer);
       }
     });
   }
 
-  selectClass(lecture: Lecture) {
-    this.selectedClassId = lecture.name;
-    this.lectureChange.next(lecture);
+  selectSubject(subject: Subject) {
+    this.subjectChange.next(subject);
   }
 
 }

@@ -1,0 +1,71 @@
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Imię </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="surname">
+        <mat-header-cell *matHeaderCellDef> Nazwisko </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.surname}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef> Tytuł </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.title? element.title.name : ""}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="options">
+      <mat-header-cell *matHeaderCellDef> Opcje </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <button mat-button (click)="editLecturer(element, $event, i)">Zmień</button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nameEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput [(ngModel)]="element.name"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="surnameEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput [(ngModel)]="element.surname"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="titleEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <mat-select [(ngModel)]="element.title" [compareWith]="compareTitles">
+            <mat-option *ngFor="let title of titles" [value]="title">
+              {{ title.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="optionsEdit">
+      <mat-cell *matCellDef="let element; let i = index">
+        <button mat-button (click)="saveLecturer(element, $event, i)">Zapisz</button>
+      </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="['name', 'surname', 'title', 'options']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name', 'surname', 'title', 'options'];"
+            matRipple 
+            class="element-row"  
+            [class.expanded]="expandedElement === row" 
+            (click)="expandedElement = expandedElement === row? null : row"
+            style="overflow: hidden">
+    </mat-row>
+    <mat-row *matRowDef="let row; columns: ['nameEdit', 'surnameEdit', 'titleEdit', 'optionsEdit']; when: isEditableRow"></mat-row>
+</mat-table>
+  <button class="fab" type="button" mat-fab matTooltip="Dodaj przedmiot" matTooltipPosition="left" (click)="addLecturer()"><mat-icon>add</mat-icon></button>
+</div>
