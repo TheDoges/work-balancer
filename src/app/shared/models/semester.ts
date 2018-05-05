@@ -3,7 +3,7 @@ export class Semester implements Serializable<Semester, RawSemester, RawSemester
     id?: string;
     name: string;
     year: string;
-
+    
     deserialize(input: RawSemester): Semester {
         this.id = input.id;
         this.name = input.name;

@@ -6,13 +6,13 @@ import { Degree, RawDegree } from '../models/degree';
 
 @Injectable()
 export class DegreeService {
-
+  
   constructor(private apiService: ApiService) { }
-
+  
   getAll(): Observable<Degree[]> {
     return this.apiService.get('degree')
     .pipe(map(response => response.data))
     .pipe(map((degrees: RawDegree[]) => degrees.map(degree => new Degree().deserialize(degree))))
   }
-
+  
 }

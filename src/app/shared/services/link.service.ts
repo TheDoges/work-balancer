@@ -7,9 +7,9 @@ import { Lecturer } from '../models/lecturer';
 
 @Injectable()
 export class LinkService {
-
+  
   constructor() { }
-
+  
   getAllForSemester(semester: Semester): Observable<Link[]> {
     // Tu będzie request
     return Observable.of([
@@ -21,7 +21,7 @@ export class LinkService {
       })
     ]);
   }
-
+  
   add(link: Link, subject: Subject, lecturer: Lecturer) {
     // Tu będzie request
     link.subject = subject;
@@ -29,7 +29,7 @@ export class LinkService {
     link.lecturer = lecturer;
     lecturer.addLink(link);
   }
-
+  
   update(link: Link, subject: Subject, lecturer: Lecturer) {
     // Tu będzie request
     subject.removeLink(link);
@@ -37,11 +37,11 @@ export class LinkService {
     link.subject.addLink(link);
     link.lecturer.addLink(link);
   }
-
+  
   delete(link: Link) {
     // Tu będzie request
     link.subject.removeLink(link);
     link.lecturer.removeLink(link);
   }
-
+  
 }

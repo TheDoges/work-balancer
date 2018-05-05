@@ -21,9 +21,9 @@ export class PlanningTableComponent implements OnInit {
   @Output() subjectChange: EventEmitter<Subject> = new EventEmitter<Subject>();
   displayedColumns = ['name', 'total', 'proffessors', 'hours'];
   dataSource: MatTableDataSource<Subject>;
-
+  
   constructor(private subjectService: SubjectService, private linkService: LinkService, public dialog: MatDialog) { }
-
+  
   ngOnInit() {
     // this.dataSource = new MatTableDataSource<Subject>(this.subjects);
     this.subjectService.getAllForSemester(null)
@@ -32,11 +32,11 @@ export class PlanningTableComponent implements OnInit {
       this.subjects = subjects;
     })
   }
-
+  
   removeLink(subject: Subject, index: number, link: Link) {
     this.linkService.delete(link);
   }
-
+  
   addLink(subject: Subject) {
     const link: Link = new Link();
     link.subject = subject;
@@ -54,7 +54,7 @@ export class PlanningTableComponent implements OnInit {
       }
     });
   }
-
+  
   editLink(subject: Subject, index: number, link: Link) {
     const dialogRef = this.dialog.open(ProfessorSelectComponent, {
       data: {
@@ -69,9 +69,9 @@ export class PlanningTableComponent implements OnInit {
       }
     });
   }
-
+  
   selectSubject(subject: Subject) {
     this.subjectChange.next(subject);
   }
-
+  
 }

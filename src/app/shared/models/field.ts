@@ -3,7 +3,7 @@ export class Field implements Serializable<Field, RawField, RawField> {
     id?: string;
     name: string;
     type: string;
-
+    
     deserialize(input: RawField): Field {
         this.id = input.id;
         this.name = input.name;

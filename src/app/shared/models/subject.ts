@@ -15,7 +15,7 @@ export class Subject implements Serializable<Subject, InputSubject, OutputSubjec
     semesterNumber: number;
     links: Link[] = [];
     linkHours: number = 0;
-
+    
     deserialize(input: InputSubject): Subject {
         this.id = input.id;
         this.name = input.name;
@@ -49,7 +49,7 @@ export class Subject implements Serializable<Subject, InputSubject, OutputSubjec
             semesterNumber: this.semesterNumber
         };
     }
-
+    
     addLink(link: Link) {
         this.linkHours += link.hours;
         this.links.push(link);

@@ -11,15 +11,15 @@ import { Semester } from '../models/semester';
 
 @Injectable()
 export class SubjectService {
-
+  
   constructor(private apiService: ApiService, private linkService: LinkService) { }
-
+  
   getAll(): Observable<Subject[]> {
     return this.apiService.get('subject')
     .pipe(map(response => response.data))
     .pipe(map((subjects: InputSubject[]) => subjects.map(subject => new Subject().deserialize(subject))))
   };
-
+  
   getAllForSemester(semester: Semester): Observable<Subject[]> {
     return combineLatest(this.getAll(), this.linkService.getAllForSemester(semester), (subjects:Subject[], links:Link[]) => {
       links.forEach(link => {
@@ -32,7 +32,7 @@ export class SubjectService {
       return subjects;
     });
   };
-
+  
   getSubjectTypes(): Observable<SubjectType[]> {
     const subjectTypes = [
       SubjectType.lab,
@@ -40,10 +40,10 @@ export class SubjectService {
     ];
     return Observable.of(subjectTypes);
   };
-
+  
   save(subject: Subject): Observable<Subject> {
     const payload: OutputSubject = subject.serialize();
     return subject.id? this.apiService.put(`subject/${subject.id}`, payload) : this.apiService.post('subject', payload);
   };
-
+  
 }

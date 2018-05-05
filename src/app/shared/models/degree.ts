@@ -5,7 +5,7 @@ export class Degree implements Serializable<Degree, RawDegree, RawDegree> {
     prefix: string;
     alias: string;
     number: number;
-
+    
     deserialize(input: RawDegree): Degree {
         this.id = input.id;
         this.name = input.name;

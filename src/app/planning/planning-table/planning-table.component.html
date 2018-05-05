@@ -12,13 +12,13 @@
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="total">
-          <mat-header-cell *matHeaderCellDef> Liczba godzin </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-              <mat-form-field>
-                  <input matInput [(ngModel)]="element.hours" type="number"/>
-                </mat-form-field>
-          </mat-cell>
-        </ng-container>
+        <mat-header-cell *matHeaderCellDef> Liczba godzin </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-form-field>
+            <input matInput [(ngModel)]="element.hours" type="number"/>
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
       
       <!-- Name Column -->
       <ng-container matColumnDef="proffessors">
@@ -38,8 +38,8 @@
           (matChipInputTokenEnd)="add($event)" />
         </mat-form-field> -->
         <button mat-icon-button color="primary" (click)="addLink(element)">
-            <mat-icon aria-label="Dodaj prowadzącego">add</mat-icon>
-          </button>
+          <mat-icon aria-label="Dodaj prowadzącego">add</mat-icon>
+        </button>
       </mat-cell>
     </ng-container>
     
@@ -47,7 +47,7 @@
     <ng-container matColumnDef="hours">
       <mat-header-cell *matHeaderCellDef> Liczba godzin </mat-header-cell>
       <mat-cell *matCellDef="let element" [ngClass]="{'warn': element.linkHours !== element.hours}">
-       {{element.linkHours}} / {{element.hours}}
+        {{element.linkHours}} / {{element.hours}}
       </mat-cell>
     </ng-container>
     

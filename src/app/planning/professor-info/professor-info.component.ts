@@ -9,16 +9,16 @@ import { LinkService } from '../../shared/services/link.service';
   styleUrls: ['./professor-info.component.css']
 })
 export class ProfessorInfoComponent implements OnInit {
-
+  
   @Input() lecturer: Lecturer;
-
+  
   constructor(private linkService: LinkService) { }
-
+  
   ngOnInit() {
   }
-
+  
   removeLink(index: number, link: Link) {
     this.linkService.delete(link);
   }
-
+  
 }

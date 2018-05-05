@@ -11,7 +11,7 @@ export class Lecturer implements Serializable<Lecturer, InputLecturer, OutputLec
     title: Title;
     links?: Link[] = [];
     linkHours: number = 0;
-
+    
     deserialize(input: InputLecturer): Lecturer {
         this.id = input.id.toString();
         this.name = input.name;
@@ -27,7 +27,7 @@ export class Lecturer implements Serializable<Lecturer, InputLecturer, OutputLec
             title_id: this.title? this.title.id : null
         };
     }
-
+    
     addLink(link: Link) {
         this.linkHours += link.hours;
         this.links.push(link);

@@ -11,16 +11,16 @@ import { Subject } from '../shared/models/subject';
   styleUrls: ['./planning.component.css']
 })
 export class PlanningComponent implements OnInit {
-
+  
   private lecturers: Lecturer[] = [];
   filteredLecturers: Lecturer[] = [];
   subjects: Subject[] = [];
   subject: Subject;
-
+  
   @ViewChild('sideNav') sideNav: MatSidenav;
-
+  
   constructor(private lecturerService: LecturerService, private subjectService: SubjectService) { }
-
+  
   ngOnInit() {
     this.lecturerService.getAll()
     .subscribe(lecturers => {
@@ -30,15 +30,15 @@ export class PlanningComponent implements OnInit {
     this.subjectService.getAll()
     .subscribe(subjects => this.subjects = subjects)
   }
-
+  
   setSubject(subject: Subject) {
     this.subject = subject;
     this.sideNav.close();
     this.sideNav.open();
   }
-
+  
   filterLecturers(query: string) {
     this.filteredLecturers = this.lecturers.filter(lecturer => lecturer.name.includes(query));
   }
-
+  
 }

@@ -9,7 +9,7 @@ export class Link implements Serializable<Link, RawLink, RawLink> {
     hours: number;
     lecturer?: Lecturer;
     subject?: Subject;
-
+    
     deserialize(input: RawLink): Link {
         this.id = input.id;
         this.lecturer_id = input.lecturer_id;

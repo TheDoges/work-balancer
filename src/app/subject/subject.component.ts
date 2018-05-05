@@ -27,11 +27,11 @@ export class SubjectComponent implements OnInit{
   expandedElement;
   editedRow;
   lastIndex;
-
+  
   subjects: Subject[];
   degrees: Degree[];
   subjectTypes: SubjectType[];
-
+  
   constructor(private degreeService: DegreeService, private subjectService: SubjectService) {}
   
   ngOnInit(): void {
@@ -40,19 +40,19 @@ export class SubjectComponent implements OnInit{
       this.subjects = subjects;
       this.dataChange.next(subjects);
     });
-
+    
     this.subjectService.getSubjectTypes()
     .subscribe(subjectTypes => this.subjectTypes = subjectTypes);
-
+    
     this.degreeService.getAll()
     .subscribe(degrees => this.degrees = degrees);
   }
-
+  
   isExpansionDetailRow = (_, row) => row.hasOwnProperty('detailRow');
   isEditableRow = (_, row) => {
     return row === this.editedRow;
   }
-
+  
   addLecture() {
     const row = new Subject();
     const lastRow = this.editedRow;
@@ -65,7 +65,7 @@ export class SubjectComponent implements OnInit{
       this.refreshElementPredicate(lastIndex+1, lastRow)
     }
   }
-
+  
   editLecture(element, event, index) {
     const lastElement = this.editedRow;
     const lastIndex = this.lastIndex;
@@ -77,7 +77,7 @@ export class SubjectComponent implements OnInit{
     }
     event.stopPropagation();
   }
-
+  
   saveLecture(element, event, index) {
     this.editedRow = null;
     this.lastIndex = null;
@@ -86,21 +86,21 @@ export class SubjectComponent implements OnInit{
     .subscribe(subject => {});
     event.stopPropagation();
   }
-
+  
   private refreshElementPredicate(index, element) {
     this.subjects.splice(index,1);
     this.dataChange.next(this.subjects);
     this.subjects = this.subjects.slice(0, index).concat([element]).concat(this.subjects.slice(index));
     this.dataChange.next(this.subjects);
   }
-
+  
   compareDegrees(a: Degree, b:Degree) {
     return a.id === b.id;
   }
 }
 
 export class ExampleDataSource extends DataSource<any> {
-
+  
   constructor(private dataChange) {
     super();
   }
@@ -108,6 +108,6 @@ export class ExampleDataSource extends DataSource<any> {
   connect(): Observable<any> { 
     return this.dataChange;
   }
-
+  
   disconnect() {}
 }

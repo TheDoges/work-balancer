@@ -122,6 +122,6 @@ import { HttpModule } from '@angular/http';
     BrowserAnimationsModule,
     Ng2FabSpeedDialModule
   ]
-
+  
 })
 export class SharedModule { }

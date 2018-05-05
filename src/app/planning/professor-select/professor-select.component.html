@@ -8,13 +8,13 @@
     </mat-autocomplete>
   </mat-form-field>
   <mat-slider
-    [max]="data.max"
-    [min]="0"
-    [thumb-label]="true"
-    [tick-interval]="10"
-    name="hours"
-    [(ngModel)]="data.link.hours">
-  </mat-slider>
-  <button type="submit" mat-raised-button color="primary">Dodaj</button>
-  <button mat-raised-button [mat-dialog-close]=null >Anuluj</button>
+  [max]="data.max"
+  [min]="0"
+  [thumb-label]="true"
+  [tick-interval]="10"
+  name="hours"
+  [(ngModel)]="data.link.hours">
+</mat-slider>
+<button type="submit" mat-raised-button color="primary">Dodaj</button>
+<button mat-raised-button [mat-dialog-close]=null >Anuluj</button>
 </form>

@@ -10,15 +10,15 @@ import { Link } from '../models/link';
 
 @Injectable()
 export class LecturerService {
-
+  
   constructor(private apiService: ApiService, private linkService: LinkService) { }
-
+  
   getAll(): Observable<Lecturer[]> {
     return this.apiService.get('lecturer')
     .pipe(map(response => response.data))
     .pipe(map((lecturers: InputLecturer[]) => lecturers.map(lecturer => new Lecturer().deserialize(lecturer))))
   };
-
+  
   getAllForSemester(semester: Semester): Observable<Lecturer[]> {
     return combineLatest(this.getAll(), this.linkService.getAllForSemester(semester), (lecturers:Lecturer[], links:Link[]) => {
       links.forEach(link => {
@@ -31,11 +31,11 @@ export class LecturerService {
       return lecturers;
     });
   }
-
+  
   save(lecturer: Lecturer) {
     const payload: OutputLecturer = lecturer.serialize();
     return lecturer.id? this.apiService.put(`lecturer/${lecturer.id}`, payload) : this.apiService.post('lecturer', payload);
   };
-
-
+  
+  
 }

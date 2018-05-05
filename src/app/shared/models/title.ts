@@ -14,7 +14,7 @@ export class Title implements Serializable<Title, RawTitle, RawTitle> {
     min_hours: number;
     max_hours: number;
     warning_percent: number;
-
+    
     deserialize(input: RawTitle): Title {
         this.id = input.id;
         this.name = input.name;

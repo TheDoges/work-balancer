@@ -1,24 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { planningTableComponent } from './planning-table.component.spec.ts';
+import { PlanningTableComponent } from './planning-table.component';
 
 describe('planningTableComponent', () => {
-  let component: planningTableComponent;
-  let fixture: ComponentFixture<planningTableComponent>;
-
+  let component: PlanningTableComponent;
+  let fixture: ComponentFixture<PlanningTableComponent>;
+  
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ planningTableComponent ]
+      declarations: [ PlanningTableComponent ]
     })
     .compileComponents();
   }));
-
+  
   beforeEach(() => {
-    fixture = TestBed.createComponent(planningTableComponent);
+    fixture = TestBed.createComponent(PlanningTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
+  
   it('should create', () => {
     expect(component).toBeTruthy();
   });
