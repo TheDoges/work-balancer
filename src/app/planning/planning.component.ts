@@ -1,8 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ProfessorService } from '../shared/services/professor.service';
-import Professor from '../shared/models/professor';
-import Class from '../shared/models/class';
-import { ClassService } from '../shared/services/class.service';
 import { MatSidenav } from '@angular/material';
 import { LecturerService } from '../shared/services/lecturer.service';
 import { Lecturer } from '../shared/models/lecturer';

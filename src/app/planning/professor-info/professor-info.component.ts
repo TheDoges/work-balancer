@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import Professor from '../../shared/models/professor';
-import Job from '../../shared/models/job';
 import { Lecturer } from '../../shared/models/lecturer';
 import { Link } from '../../shared/models/link';
 import { LinkService } from '../../shared/services/link.service';

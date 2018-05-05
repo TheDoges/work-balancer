@@ -3,12 +3,6 @@ import { trigger, transition, state, style, animate } from '@angular/animations'
 import { DataSource } from '@angular/cdk/table';
 import * as rxjs from 'rxjs';
 import { MatTableDataSource } from '@angular/material';
-import { StudyService } from '../shared/services/study.service';
-import { StudyKindService } from '../shared/services/study-kind.service';
-import { StudyFormService } from '../shared/services/study-form.service';
-import Study from '../shared/models/study';
-import StudyKind from '../shared/models/studyKind';
-import StudyForm from '../shared/models/studyForm';
 import { SubjectService } from '../shared/services/subject.service';
 import { Subject, SubjectType } from '../shared/models/subject';
 import { Degree } from '../shared/models/degree';
@@ -33,20 +27,14 @@ export class SubjectComponent implements OnInit{
   expandedElement;
   editedRow;
   lastIndex;
-  studyForms: StudyForm[] = [];
-  studyKinds: StudyKind[] = [];
-  studies: Study[] = [];
 
   subjects: Subject[];
   degrees: Degree[];
   subjectTypes: SubjectType[];
 
-  constructor(private studyService: StudyService, private degreeService: DegreeService, private studyKindService: StudyKindService, private studyFormService: StudyFormService, private subjectService: SubjectService) {}
+  constructor(private degreeService: DegreeService, private subjectService: SubjectService) {}
   
   ngOnInit(): void {
-    this.studyService.getAll()
-    .subscribe(studies => this.studies = studies);
-
     this.subjectService.getAll()
     .subscribe(subjects => {
       this.subjects = subjects;
@@ -58,12 +46,6 @@ export class SubjectComponent implements OnInit{
 
     this.degreeService.getAll()
     .subscribe(degrees => this.degrees = degrees);
-
-    this.studyKindService.getAll()
-    .subscribe(studyKinds => this.studyKinds = studyKinds);
-
-    this.studyFormService.getAll()
-    .subscribe(studyForms => this.studyForms = studyForms);
   }
 
   isExpansionDetailRow = (_, row) => row.hasOwnProperty('detailRow');

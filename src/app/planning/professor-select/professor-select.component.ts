@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import Professor from '../../shared/models/professor';
 import { Lecturer } from '../../shared/models/lecturer';
 
 @Component({
