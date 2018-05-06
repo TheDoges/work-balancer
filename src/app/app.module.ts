@@ -11,6 +11,8 @@ import { LecturerModule } from './lecturer/lecturer.module';
 import { TitleModule } from './title/title.module';
 import { SemesterModule } from './semester/semester.module';
 import { SubjectModule } from './subject/subject.module';
+import { LoginModule } from './login/login.module';
+import { RegisterModule } from './register/register.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SubjectService } from './shared/services/subject.service';
 import { DegreeService } from './shared/services/degree.service';
@@ -18,6 +20,10 @@ import { LecturerService } from './shared/services/lecturer.service';
 import { TitleService } from './shared/services/title.service';
 import { LinkService } from './shared/services/link.service';
 import { SemesterService } from './shared/services/semester.service';
+import { AuthService } from './shared/services/auth.service';
+import { CredentialService } from './shared/services/credential.service';
+import { AuthGuardService } from './shared/services/authguard.service';
+import { LoadingService } from './shared/services/loading.service';
 
 enableProdMode();
 
@@ -39,7 +45,9 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([
     BrowserAnimationsModule,
     SubjectModule,
     TitleModule,
-    SemesterModule
+    SemesterModule,
+    LoginModule,
+    RegisterModule
   ],
   providers: [
     ApiService,
@@ -49,7 +57,11 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([
     LecturerService,
     TitleService,
     LinkService,
-    SemesterService
+    SemesterService,
+    AuthService,
+    AuthGuardService,
+    CredentialService,
+    LoadingService
   ],
   bootstrap: [AppComponent]
 })

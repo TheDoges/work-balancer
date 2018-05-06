@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { SubjectComponent } from './subject.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
+import { AuthGuardService } from '../shared/services/authguard.service';
 
 const subjectrouting: ModuleWithProviders = RouterModule.forChild([
   {
     path: 'subjects',
-    component: SubjectComponent
-    // canActivate: [AuthGuardService]
+    component: SubjectComponent,
+    canActivate: [AuthGuardService]
   }
 ]);
 

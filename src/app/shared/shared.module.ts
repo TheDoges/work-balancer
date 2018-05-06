@@ -38,6 +38,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2FabSpeedDialModule } from 'ng2-fab-speed-dial';
 import { HttpModule } from '@angular/http';
+import { CredentialService } from './services/credential.service';
 
 
 
@@ -81,6 +82,9 @@ import { HttpModule } from '@angular/http';
     BrowserAnimationsModule,
     Ng2FabSpeedDialModule,
     HttpModule
+  ],
+  providers: [
+    CredentialService
   ],
   declarations: [],
   exports: [

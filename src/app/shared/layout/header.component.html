@@ -1,82 +1,16 @@
 <mat-toolbar color="primary">
-      <!-- <a routerLink="/"> -->
   Didacticos 2.0
   <span fxFlex></span>
-  <button mat-button routerLink="/planning">Planowanie</button>
-  <button mat-button routerLink="/lecturers">Prowadzący</button>
-  <button mat-button routerLink="/subjects">Przedmioty</button>
-  <button mat-button routerLink="/titles">Tytuły</button>
-  <button mat-button routerLink="/semesters">Semestry</button>
-  
+  <span *ngIf="username">
+    <button mat-button routerLink="/planning">Planowanie</button>
+    <button mat-button routerLink="/lecturers">Prowadzący</button>
+    <button mat-button routerLink="/subjects">Przedmioty</button>
+    <button mat-button routerLink="/titles">Tytuły</button>
+    <button mat-button routerLink="/semesters">Semestry</button>
+  </span>
+  <button mat-button [matMenuTriggerFor]="menu">{{username}}</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()" >Wyloguj</button>
+    <button mat-menu-item routerLink="/register">Rejestracja</button>
+  </mat-menu>
 </mat-toolbar>
-      
-      <!-- </a> -->
-  
-      <!-- Show this for logged out users -->
-      <!-- <ul *showAuthed="false"
-        class="nav navbar-nav pull-xs-right">
-  
-        <li class="nav-item">
-          <a class="nav-link"
-            routerLink="/">
-            Home
-          </a>
-        </li>
-  
-        <li class="nav-item">
-          <a class="nav-link"
-            routerLink="/login"
-            routerLinkActive="active">
-            Sign in
-          </a>
-        </li>
-  
-        <li class="nav-item">
-          <a class="nav-link"
-            routerLink="/register"
-            routerLinkActive="active">
-            Sign up
-          </a>
-        </li>
-  
-      </ul> -->
-  
-      <!-- Show this for logged in users -->
-      <!-- <ul
-        class="nav navbar-nav pull-xs-right">
-  
-        <li class="nav-item">
-          <a class="nav-link"
-            routerLink="/"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">
-            Home
-          </a>
-        </li>
-  
-        <li class="nav-item">
-          <a class="nav-link"
-            routerLink="/mapping"
-            routerLinkActive="active">
-            <i class="ion-compose"></i>&nbsp;Mapping
-          </a>
-        </li>
-  
-        <li class="nav-item">
-          <a class="nav-link"
-            routerLink="/network"
-            routerLinkActive="active">
-            <i class="ion-gear-a"></i>&nbsp;Network
-          </a>
-        </li> -->
-  
-        <!-- <li class="nav-item">
-          <a class="nav-link"
-            [routerLink]="['/profile', currentUser.username]"
-            routerLinkActive="active">
-            <img src="{{currentUser.image}}" *ngIf="currentUser.image" class="user-pic" />
-            {{ currentUser.username }}
-          </a>
-        </li> -->
-  
-      <!-- </ul> -->

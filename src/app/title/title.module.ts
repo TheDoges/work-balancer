@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { TitleComponent } from './title.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
+import { AuthGuardService } from '../shared/services/authguard.service';
 
 const titleRouting: ModuleWithProviders = RouterModule.forChild([
   {
     path: 'titles',
-    component: TitleComponent
-    // canActivate: [AuthGuardService]
+    component: TitleComponent,
+    canActivate: [AuthGuardService]
   }
 ]);
 

@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SemesterComponent } from './semester.component';
 import { SharedModule } from '../shared';
+import { AuthGuardService } from '../shared/services/authguard.service';
 
 const semesterRouting: ModuleWithProviders = RouterModule.forChild([
   {
     path: 'semesters',
-    component: SemesterComponent
-    // canActivate: [AuthGuardService]
+    component: SemesterComponent,
+    canActivate: [AuthGuardService]
   }
 ]);
 

@@ -6,12 +6,13 @@ import { SharedModule } from '../shared/shared.module';
 import { PlanningTableComponent } from './planning-table/planning-table.component';
 import { ProfessorSelectComponent } from './professor-select/professor-select.component';
 import { ProfessorInfoComponent } from './professor-info/professor-info.component';
+import { AuthGuardService } from '../shared/services/authguard.service';
 
 const planningRouting: ModuleWithProviders = RouterModule.forChild([
   {
     path: 'planning',
-    component: PlanningComponent
-    // canActivate: [AuthGuardService]
+    component: PlanningComponent,
+    canActivate: [AuthGuardService]
   }
 ]);
 

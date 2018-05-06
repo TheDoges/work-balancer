@@ -1,2 +1,5 @@
-<app-layout-header></app-layout-header>
-<router-outlet></router-outlet>  
+<mat-progress-bar class="loading-bar" mode="indeterminate" *ngIf=isBusy></mat-progress-bar>
+<div class="container" fxLayout="column" [ngClass]="{'busy': isBusy, 'style2': true}">
+    <app-layout-header></app-layout-header>
+    <router-outlet></router-outlet>  
+</div>

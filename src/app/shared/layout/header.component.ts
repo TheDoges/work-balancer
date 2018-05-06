@@ -1,5 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
+import { CredentialService } from '../services/credential.service';
+import { Router } from '@angular/router';
 
 // import { UserService } from '../services';
 // import { User } from '../models';
@@ -10,14 +12,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: [ './header.component.css' ]
 })
 export class HeaderComponent implements OnInit {
-//   currentUser: User;
-//   constructor(private userService: UserService) {}
+  private username: string;
 
-   ngOnInit() {
-    //  this.userService.currentUser.subscribe(
-    //    (userData) => {
-    //      this.currentUser = userData;
-    //    }
-    //  )
-   }
+  constructor(private credentialService: CredentialService, private router: Router) {};
+
+  ngOnInit() {
+    this.credentialService.getUsername()
+    .subscribe(username => this.username = username);
+  }
+
+  logout() {
+    this.credentialService.setToken(null);
+    this.credentialService.setUsername(null);
+    this.router.navigateByUrl('/login');
+  }
 }
