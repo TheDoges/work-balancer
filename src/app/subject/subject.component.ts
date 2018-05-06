@@ -73,6 +73,7 @@ export class SubjectComponent implements OnInit{
     this.lastIndex = index;
     this.refreshElementPredicate(index,element);
     if (lastElement) {
+      this.subjectService.save(lastElement).toPromise();
       this.refreshElementPredicate(lastIndex, lastElement);
     }
     event.stopPropagation();

@@ -7,11 +7,12 @@ import { Semester } from '../models/semester';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { LinkService } from './link.service';
 import { Link } from '../models/link';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class LecturerService {
   
-  constructor(private apiService: ApiService, private linkService: LinkService) { }
+  constructor(private apiService: ApiService, private linkService: LinkService, private snackBar: MatSnackBar) { }
   
   getAll(): Observable<Lecturer[]> {
     return this.apiService.get('lecturer')
@@ -34,7 +35,11 @@ export class LecturerService {
   
   save(lecturer: Lecturer) {
     const payload: OutputLecturer = lecturer.serialize();
-    return lecturer.id? this.apiService.put(`lecturer/${lecturer.id}`, payload) : this.apiService.post('lecturer', payload);
+    const request = lecturer.id? this.apiService.put(`lecturer/${lecturer.id}`, payload) : this.apiService.post('lecturer', payload);
+    return request
+    .do(() => {
+      this.snackBar.open(`Prowadzący "${lecturer.surname} ${lecturer.name}" został zapisany`, null, {duration: 3000});
+    })
   };
   
   

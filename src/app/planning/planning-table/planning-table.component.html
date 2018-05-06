@@ -1,21 +1,45 @@
 <div class="mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource">
+  <mat-table #table [dataSource]="dataSource" matSort>
     
     <!--- Note that these columns can be defined in any order.
       The actual rendered columns are set as a property on the row definition" -->
       
       <!-- Position Column -->
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Przedmiot </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Przedmiot </mat-header-cell>
         <mat-cell *matCellDef="let element">
           {{element.name}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Typ </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.type}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="degree">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Stopień </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.degree.prefix}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fieldName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Kierunek </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.field.name}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fieldType">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Stac. </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.field.type === 'STACJONARNE'? "Tak" : "Nie"}}
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="total">
         <mat-header-cell *matHeaderCellDef> Liczba godzin </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <mat-form-field>
-            <input matInput [(ngModel)]="element.hours" type="number"/>
+            <input matInput [(ngModel)]="element.hours" (change)="updateSubjectHours(element)" type="number"/>
           </mat-form-field>
         </mat-cell>
       </ng-container>

@@ -63,7 +63,10 @@ export class Subject implements Serializable<Subject, InputSubject, OutputSubjec
 
 export enum SubjectType {
     lec = "Wykład",
-    lab = "Laboratorium"
+    lab = "Laboratorium",
+    exe = "Ćwiczenia",
+    sem = "Seminarium",
+    pro = "Projekt"
 }
 
 export interface InputSubject {

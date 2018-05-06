@@ -3,6 +3,7 @@ import { Field, RawField } from './field'
 import { Degree, RawDegree } from './degree';
 import { Title, RawTitle } from './title';
 import { Link } from './link';
+import { SubjectType } from './subject';
 
 export class Lecturer implements Serializable<Lecturer, InputLecturer, OutputLecturer> {
     id?: string;
@@ -36,6 +37,10 @@ export class Lecturer implements Serializable<Lecturer, InputLecturer, OutputLec
     removeLink(removedLink: Link) {
         this.links = this.links.filter(link => link.id !== removedLink.id);
         this.linkHours = this.links.reduce((total, link) => total + link.hours, 0);
+    }
+
+    hasPermission(type: SubjectType) {
+        return this.title.permissions.includes(type);
     }
 }
 

@@ -9,13 +9,14 @@ import 'rxjs/add/operator/map';
 import {
   Http, Headers
 } from '@angular/http';
+import { MatSnackBar } from '@angular/material';
 
 const API_PATH = 'http://localhost:4200/api/';
 
 @Injectable()
 export class ApiService {
   
-  constructor(private http: Http) {}
+  constructor(private http: Http, private snackBar: MatSnackBar) {}
   
   get(path: string, params: URLSearchParams = new URLSearchParams()): Observable < any > {
     return this.http.get(`${API_PATH}${path}`, { headers: this.setHeaders()} )
@@ -57,7 +58,10 @@ export class ApiService {
   }
   
   private formatErrors(error: any) {
-    return Observable.throw(this.parseResponse(error));
+    const parsedResponse: any = this.parseResponse(error);
+    this.snackBar.open(`Wystąpił nieoczekiwany błąd`, null, {duration: 3000});
+    console.error(`Wystąpił nieoczekiwany błąd: "${parsedResponse.exception} - ${parsedResponse.message}"`);
+    return Observable.throw(parsedResponse);
   }
   
   private parseResponse(response: Response) {

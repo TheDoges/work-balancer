@@ -4,6 +4,8 @@ import { LecturerService } from '../shared/services/lecturer.service';
 import { Lecturer } from '../shared/models/lecturer';
 import { SubjectService } from '../shared/services/subject.service';
 import { Subject } from '../shared/models/subject';
+import { Semester } from '../shared/models/semester';
+import { SemesterService } from '../shared/services/semester.service';
 
 @Component({
   selector: 'app-planning',
@@ -16,19 +18,39 @@ export class PlanningComponent implements OnInit {
   filteredLecturers: Lecturer[] = [];
   subjects: Subject[] = [];
   subject: Subject;
+  selectedSemester: Semester;
+  semesters: Semester[];
   
   @ViewChild('sideNav') sideNav: MatSidenav;
   
-  constructor(private lecturerService: LecturerService, private subjectService: SubjectService) { }
+  constructor(private lecturerService: LecturerService, private subjectService: SubjectService, private semesterService: SemesterService) { }
   
   ngOnInit() {
+    this.semesterService.getAll()
+    .subscribe(semesters => this.semesters = semesters)
+
+    this.semesterService.getSelected()
+    .subscribe(semester => {
+      if (semester) {
+        this.selectedSemester = semester;
+        // this.subjectService.getAllForSemester(semester)
+        // .subscribe(subjects => this.subjects = subjects)
+      }
+
+    })
+
     this.lecturerService.getAll()
     .subscribe(lecturers => {
       this.lecturers = lecturers;
       this.filteredLecturers = lecturers;
     })
-    this.subjectService.getAll()
-    .subscribe(subjects => this.subjects = subjects)
+    // this.lecturerService.getAll()
+    // .subscribe(lecturers => {
+    //   this.lecturers = lecturers;
+    //   this.filteredLecturers = lecturers;
+    // })
+    // this.subjectService.getAll()
+    //   .subscribe(subjects => this.subjects = subjects)
   }
   
   setSubject(subject: Subject) {
@@ -36,9 +58,18 @@ export class PlanningComponent implements OnInit {
     this.sideNav.close();
     this.sideNav.open();
   }
+
+  setSemester(semester: Semester) {
+    this.semesterService.setSelected(semester);
+  }
+
+  compareSemesters(a: Semester, b: Semester) {
+    return a.id === b.id;
+  }
   
   filterLecturers(query: string) {
-    this.filteredLecturers = this.lecturers.filter(lecturer => lecturer.name.includes(query));
+    query = query.toLowerCase();
+    this.filteredLecturers = this.lecturers.filter(lecturer => lecturer.name.toLowerCase().includes(query) || lecturer.surname.toLowerCase().includes(query));
   }
   
 }

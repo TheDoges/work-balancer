@@ -1,0 +1,54 @@
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+    
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Rodzaj </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="year">
+      <mat-header-cell *matHeaderCellDef> Rok </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.year}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="options">
+      <mat-header-cell *matHeaderCellDef> Opcje </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <button mat-button (click)="editSemester(element, $event, i)">Zmień</button>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="nameEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput [(ngModel)]="element.name"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="yearEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput [(ngModel)]="element.surname"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="optionsEdit">
+      <mat-cell *matCellDef="let element; let i = index">
+        <button mat-button (click)="saveSemester(element, $event, i)">Zapisz</button>
+      </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="['name', 'year', 'options']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name', 'year', 'options'];"
+    matRipple 
+    class="element-row"  
+    [class.expanded]="expandedElement === row" 
+    (click)="expandedElement = expandedElement === row? null : row"
+    style="overflow: hidden">
+  </mat-row>
+  <mat-row *matRowDef="let row; columns: ['nameEdit', 'yearEdit', 'optionsEdit']; when: isEditableRow"></mat-row>
+</mat-table>
+<button class="fab" type="button" mat-fab matTooltip="Dodaj przedmiot" matTooltipPosition="left" (click)="addSemester()"><mat-icon>add</mat-icon></button>
+</div>

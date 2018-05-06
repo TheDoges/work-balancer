@@ -1,0 +1,148 @@
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+    
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Tytuł </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="short_name">
+      <mat-header-cell *matHeaderCellDef> Skrót </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.short_name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lab_permission">
+      <mat-header-cell *matHeaderCellDef> Lab. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.lab_permission? "Tak": "Nie"}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="lec_permission">
+      <mat-header-cell *matHeaderCellDef> Wykł. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.lec_permission? "Tak": "Nie"}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="exe_permission">
+      <mat-header-cell *matHeaderCellDef> Ćw. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.exe_permission? "Tak": "Nie"}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="sem_permission">
+      <mat-header-cell *matHeaderCellDef> Sem. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.sem_permission? "Tak": "Nie"}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="pro_permission">
+      <mat-header-cell *matHeaderCellDef> Proj. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.pro_permission? "Tak": "Nie"}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="min_hours">
+      <mat-header-cell *matHeaderCellDef> Min. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.min_hours}}h </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="max_hours">
+      <mat-header-cell *matHeaderCellDef> Max. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.max_hours}}h </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="warning_percent">
+      <mat-header-cell *matHeaderCellDef> Ostrzeżenie </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.warning_percent}}% </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="options">
+      <mat-header-cell *matHeaderCellDef> Opcje </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <button mat-button (click)="editTitle(element, $event, i)">Zmień</button>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="nameEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput [(ngModel)]="element.name"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="short_nameEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput [(ngModel)]="element.short_name"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lab_permissionEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox [(ngModel)]="element.lab_permission"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lec_permissionEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox [(ngModel)]="element.lec_permission"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="exe_permissionEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox [(ngModel)]="element.exe_permission"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="sem_permissionEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox [(ngModel)]="element.sem_permission"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="pro_permissionEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox [(ngModel)]="element.pro_permission"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="optionsEdit">
+      <mat-cell *matCellDef="let element; let i = index">
+        <button mat-button (click)="saveTitle(element, $event, i)">Zapisz</button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="min_hoursEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput type="number" [(ngModel)]="element.min_hours"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="max_hoursEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput type="number" [(ngModel)]="element.max_hours"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="warning_percentEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput type="number" [(ngModel)]="element.warning_percent"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="['name', 'short_name', 'lab_permission', 'lec_permission', 'exe_permission', 'sem_permission', 'pro_permission', 'min_hours', 'max_hours', 'warning_percent', 'options']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name', 'short_name', 'lab_permission', 'lec_permission', 'exe_permission', 'sem_permission', 'pro_permission', 'min_hours', 'max_hours', 'warning_percent', 'options'];"
+    matRipple 
+    class="element-row"  
+    [class.expanded]="expandedElement === row" 
+    (click)="expandedElement = expandedElement === row? null : row"
+    style="overflow: hidden">
+  </mat-row>
+  <mat-row *matRowDef="let row; columns: ['nameEdit', 'short_nameEdit', 'lab_permissionEdit', 'lec_permissionEdit', 'exe_permissionEdit', 'sem_permissionEdit', 'pro_permissionEdit', 'min_hoursEdit', 'max_hoursEdit', 'warning_percentEdit', 'optionsEdit']; when: isEditableRow"></mat-row>
+</mat-table>
+<button class="fab" type="button" mat-fab matTooltip="Dodaj przedmiot" matTooltipPosition="left" (click)="addTitle()"><mat-icon>add</mat-icon></button>
+</div>

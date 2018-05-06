@@ -13,7 +13,7 @@
 
       <ng-container matColumnDef="title">
           <mat-header-cell *matHeaderCellDef> Tytuł </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.title? element.title.name : ""}}</mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.title? element.title.short_name : ""}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="options">

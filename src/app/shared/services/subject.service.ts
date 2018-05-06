@@ -8,11 +8,12 @@ import { combineLatest } from 'rxjs/observable/combineLatest';
 import { merge } from 'rxjs/operator/merge';
 import { Link } from '../models/link';
 import { Semester } from '../models/semester';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class SubjectService {
   
-  constructor(private apiService: ApiService, private linkService: LinkService) { }
+  constructor(private apiService: ApiService, private linkService: LinkService, public snackBar: MatSnackBar) { }
   
   getAll(): Observable<Subject[]> {
     return this.apiService.get('subject')
@@ -22,6 +23,7 @@ export class SubjectService {
   
   getAllForSemester(semester: Semester): Observable<Subject[]> {
     return combineLatest(this.getAll(), this.linkService.getAllForSemester(semester), (subjects:Subject[], links:Link[]) => {
+      subjects = subjects.filter(subject => subject.semester.id === semester.id)
       links.forEach(link => {
         const subject = subjects.find(subject => subject.id === link.subject_id);
         if(subject) {
@@ -43,7 +45,11 @@ export class SubjectService {
   
   save(subject: Subject): Observable<Subject> {
     const payload: OutputSubject = subject.serialize();
-    return subject.id? this.apiService.put(`subject/${subject.id}`, payload) : this.apiService.post('subject', payload);
+    const request = subject.id? this.apiService.put(`subject/${subject.id}`, payload) : this.apiService.post('subject', payload);
+    return request
+    .do(() => {
+      this.snackBar.open(`Przedmiot "${subject.name}" został zapisany`, null, {duration: 3000});
+    })
   };
   
 }

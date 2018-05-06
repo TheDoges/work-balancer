@@ -1,7 +1,7 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title fxLayout="row" fxLayoutAlign="space-between">
-      <span>{{lecturer.name}}</span>
+      <span>{{lecturer.surname}} {{lecturer.name}}</span>
       <span [ngClass]="{'warn': lecturer.linkHours < lecturer.title.min_hours}">{{lecturer.linkHours}}/{{lecturer.title.min_hours}}</span>
     </mat-panel-title>
   </mat-expansion-panel-header>

@@ -17,7 +17,10 @@ export class ProfessorSelectComponent {
   lecturers: Lecturer[];
   
   constructor( public dialogRef: MatDialogRef<ProfessorSelectComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.lecturers = data.lecturers;
+    this.lecturers = data.lecturers
+    .filter((lecturer: Lecturer) => {
+      return lecturer.hasPermission(data.type)
+    })
     this.professorCtrl = new FormControl();
     this.filteredProfessors = this.professorCtrl.valueChanges
     .startWith(null)
@@ -28,9 +31,10 @@ export class ProfessorSelectComponent {
     this.dialogRef.close(data);
   }
   
-  filterProfessors(name: string) {
+  filterProfessors(query: string) {
+    query = query.toLowerCase();
     return this.lecturers.filter(lecturer =>
-      lecturer.name.toLowerCase().indexOf(name.toLowerCase()) > -1);
+      lecturer.name.toLowerCase().includes(query) || lecturer.surname.toLowerCase().includes(query));
     }
     
     formatProfessor(lecturer: Lecturer) {
