@@ -21,6 +21,10 @@ div.container {
     min-height: calc(100% - 5px);
 }
 
+.busy {
+    pointer-events: none;
+}
+
 .busy:after {
     display: block;
     content: "";

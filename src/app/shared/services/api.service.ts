@@ -24,7 +24,7 @@ export class ApiService {
     const key = this.generateBusyKey();
     this.loadingService.show(key);
     return this.http.get(`${API_PATH}${path}`, { headers: this.setHeaders()} )
-    .do(() => this.loadingService.hide(key))
+    .finally(() => this.loadingService.hide(key))
     .catch(this.formatErrors.bind(this))
     .map((res: Response) => this.parseResponse(res));
   }
@@ -37,7 +37,7 @@ export class ApiService {
       body,
       { headers: this.setHeaders()}
     )
-    .do(() => this.loadingService.hide(key))
+    .finally(() => this.loadingService.hide(key))
     .catch(this.formatErrors.bind(this))
     .map((res: Response) => this.parseResponse(res));
   }
@@ -50,7 +50,7 @@ export class ApiService {
       body,
       { headers: this.setHeaders()}
     )
-    .do(() => this.loadingService.hide(key))
+    .finally(() => this.loadingService.hide(key))
     .catch(this.formatErrors.bind(this))
     .map((res: Response) => this.parseResponse(res));
   }
@@ -62,7 +62,7 @@ export class ApiService {
       `${API_PATH}${path}`,
       { headers: this.setHeaders()}
     )
-    .do(() => this.loadingService.hide(key))
+    .finally(() => this.loadingService.hide(key))
     .catch(this.formatErrors.bind(this))
     .map((res: Response) => this.parseResponse(res));
   }
