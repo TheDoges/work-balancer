@@ -20,6 +20,7 @@
       <mat-header-cell *matHeaderCellDef> Opcje </mat-header-cell>
       <mat-cell *matCellDef="let element; let i = index">
         <button mat-button (click)="editLecturer(element, $event, i)">Zmień</button>
+        <button mat-button (click)="deleteLecturer(element)">Usuń</button>
       </mat-cell>
     </ng-container>
 

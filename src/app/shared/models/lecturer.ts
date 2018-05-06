@@ -42,6 +42,27 @@ export class Lecturer implements Serializable<Lecturer, InputLecturer, OutputLec
     hasPermission(type: SubjectType) {
         return this.title.permissions.includes(type);
     }
+
+    clearLinks() {
+        this.links = [];
+        this.linkHours = 0;
+    }
+
+    hasMinWarning() {
+        return this.linkHours <= (this.title.min_hours + this.title.warning_percent * 0.01 * this.title.min_hours);
+    }
+    
+    hasMinError() {
+        return this.linkHours < this.title.min_hours;
+    }
+
+    hasMaxWarning() {
+        return this.linkHours >= (this.title.max_hours - this.title.warning_percent * 0.01 * this.title.max_hours);
+    }
+    
+    hasMaxError() {
+        return this.linkHours > this.title.max_hours;
+    }
 }
 
 export interface InputLecturer {

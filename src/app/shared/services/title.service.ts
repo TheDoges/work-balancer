@@ -24,5 +24,14 @@ export class TitleService {
       this.snackBar.open(`Tytuł "${title.name}" został zapisany`, null, {duration: 3000});
     })
   };
+
+  delete(title: Title) {
+    if(confirm(`Czy chcesz usunąć tytuł "${title.name}"?`)) {
+      return this.apiService.delete(`title/${title.id}`)
+      .do(() => {
+        this.snackBar.open(`Tytuł "${title.name}" został usunięty`, null, {duration: 3000});
+      })
+    }
+  }
   
 }

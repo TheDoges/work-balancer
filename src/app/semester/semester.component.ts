@@ -66,6 +66,16 @@ export class SemesterComponent implements OnInit {
     event.stopPropagation();
   }
 
+  deleteSemester(semesterToRemove: Semester) {
+    const observable = this.semesterService.delete(semesterToRemove);
+    if (observable) {
+      observable.subscribe(() => {
+        this.semesters = this.semesters.filter(semester => semester.id !== semesterToRemove.id);
+        this.dataChange.next(this.semesters);
+      })
+    }
+  }
+
   private refreshElementPredicate(index, element) {
     this.semesters.splice(index,1);
     this.dataChange.next(this.semesters);

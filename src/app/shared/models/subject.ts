@@ -17,7 +17,7 @@ export class Subject implements Serializable<Subject, InputSubject, OutputSubjec
     linkHours: number = 0;
     
     deserialize(input: InputSubject): Subject {
-        this.id = input.id;
+        this.id = input.id.toString();
         this.name = input.name;
         this.type = SubjectType[input.type];
         this.hours = input.hours;
@@ -39,7 +39,7 @@ export class Subject implements Serializable<Subject, InputSubject, OutputSubjec
             }
         }
         return {
-            id: this.id,
+            id: +this.id,
             name: this.name,
             type: serializedType,
             hours: this.hours,
@@ -70,7 +70,7 @@ export enum SubjectType {
 }
 
 export interface InputSubject {
-    id?: string;
+    id?: number;
     name: string;
     type: string;
     hours: number;
@@ -81,7 +81,7 @@ export interface InputSubject {
 }
 
 export interface OutputSubject {
-    id?: string;
+    id?: number;
     name: string;
     type: string;
     hours: number;

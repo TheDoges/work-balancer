@@ -8,6 +8,8 @@ import { Subject, SubjectType } from '../shared/models/subject';
 import { Degree } from '../shared/models/degree';
 import { DegreeService } from '../shared/services/degree.service';
 import { Observable } from 'rxjs';
+import { Semester } from '../shared/models/semester';
+import { SemesterService } from '../shared/services/semester.service';
 
 @Component({
   selector: 'app-subject',
@@ -27,19 +29,30 @@ export class SubjectComponent implements OnInit{
   expandedElement;
   editedRow;
   lastIndex;
+  selectedSemester: Semester;
+  semesters: Semester[];
   
   subjects: Subject[];
   degrees: Degree[];
   subjectTypes: SubjectType[];
   
-  constructor(private degreeService: DegreeService, private subjectService: SubjectService) {}
+  constructor(private degreeService: DegreeService, private subjectService: SubjectService, private semesterService: SemesterService) {}
   
   ngOnInit(): void {
-    this.subjectService.getAll()
-    .subscribe(subjects => {
-      this.subjects = subjects;
-      this.dataChange.next(subjects);
-    });
+    this.semesterService.getAll()
+    .subscribe(semesters => this.semesters = semesters);
+
+    this.semesterService.getSelected()
+    .subscribe(semester => {
+      if (semester) {
+        this.selectedSemester = semester;
+          this.subjectService.getAllForSemester(semester)
+        .subscribe(subjects => {
+          this.subjects = subjects;
+          this.dataChange.next(subjects);
+        });
+      }
+    })
     
     this.subjectService.getSubjectTypes()
     .subscribe(subjectTypes => this.subjectTypes = subjectTypes);
@@ -54,13 +67,14 @@ export class SubjectComponent implements OnInit{
   }
   
   addLecture() {
-    const row = new Subject();
+    const semester = new Subject();
+    semester.semester = this.selectedSemester;
     const lastRow = this.editedRow;
     const lastIndex = this.lastIndex;
     this.lastIndex = 0;
-    this.editedRow = row;
-    this.subjects.unshift(row);
-    this.refreshElementPredicate(0, row);
+    this.editedRow = semester;
+    this.subjects.unshift(semester);
+    this.refreshElementPredicate(0, semester);
     if (lastRow) {
       this.refreshElementPredicate(lastIndex+1, lastRow)
     }
@@ -87,12 +101,30 @@ export class SubjectComponent implements OnInit{
     .subscribe(subject => {});
     event.stopPropagation();
   }
+
+  deleteSubject(subjectToRemove: Subject) {
+    const observable = this.subjectService.delete(subjectToRemove);
+    if (observable) {
+      observable.subscribe(() => {
+        this.subjects = this.subjects.filter(subject => subject.id !== subjectToRemove.id);
+        this.dataChange.next(this.subjects);
+      })
+    }
+  }
+
+  setSemester(semester: Semester) {
+    this.semesterService.setSelected(semester);
+  }
   
   private refreshElementPredicate(index, element) {
     this.subjects.splice(index,1);
     this.dataChange.next(this.subjects);
     this.subjects = this.subjects.slice(0, index).concat([element]).concat(this.subjects.slice(index));
     this.dataChange.next(this.subjects);
+  }
+
+  compareSemesters(a: Semester, b: Semester) {
+    return a.id === b.id;
   }
   
   compareDegrees(a: Degree, b:Degree) {

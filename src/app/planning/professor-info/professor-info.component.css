@@ -2,6 +2,15 @@ mat-chip {
     margin: .25rem !important;
 }
 
-.warn {
+.warning {
+    color: darkorange;
+}
+
+.rule:not(.error):not(.warning) {
+    color: darkgreen
+}
+
+.error,
+.error.warning {
     color: red;
 }

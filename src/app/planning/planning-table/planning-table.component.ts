@@ -32,7 +32,7 @@ export class PlanningTableComponent implements OnInit {
     .subscribe(semester => {
 
       if(semester) {
-        this.subjectService.getAllForSemester(semester)
+        this.subjectService.getAllWithLinksForSemester(semester)
         .subscribe(subjects => {
           this.subjects = subjects;
           // this.sortedData = this.subjects;
@@ -46,6 +46,7 @@ export class PlanningTableComponent implements OnInit {
             }
           };
           this.dataSource.sort = this.sort;
+          this.connectLinks(subjects, this.lecturers);
         })
       }
       
@@ -97,5 +98,20 @@ export class PlanningTableComponent implements OnInit {
 
   updateSubjectHours(subject: Subject) {
     this.subjectService.save(subject).toPromise()
+  }
+
+  private connectLinks(subjects: Subject[], lecturers: Lecturer[]) {
+    lecturers.forEach(lecturer => lecturer.clearLinks())
+    subjects.forEach(subject => {
+      if (subject.links.length) {
+        subject.links.forEach(link => {
+          const lecturer = this.lecturers.find(lecturer => lecturer.id === link.lecturer_id);
+          if (lecturer) {
+            link.lecturer = lecturer;
+            lecturer.addLink(link);
+          }
+        })
+      }
+    })
   }
 }

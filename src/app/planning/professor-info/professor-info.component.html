@@ -2,10 +2,14 @@
   <mat-expansion-panel-header>
     <mat-panel-title fxLayout="row" fxLayoutAlign="space-between">
       <span>{{lecturer.surname}} {{lecturer.name}}</span>
-      <span [ngClass]="{'warn': lecturer.linkHours < lecturer.title.min_hours}">{{lecturer.linkHours}}/{{lecturer.title.min_hours}}</span>
+      <span [ngClass]="{'warning': lecturer.hasMaxWarning() || lecturer.hasMinWarning(), 'error': lecturer.hasMinError() || lecturer.hasMaxError()}">{{lecturer.linkHours}}/{{lecturer.title.min_hours}}</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
   <mat-chip-list #chipList [selectable]="true">
+    <ul>
+      <li class="rule" [ngClass]="{'warning': lecturer.hasMinWarning(), 'error': lecturer.hasMinError()}">{{lecturer.title.short_name}} - MIN {{lecturer.title.min_hours}}h</li>
+      <li class="rule" [ngClass]="{'warning': lecturer.hasMaxWarning(), 'error': lecturer.hasMaxError()}">{{lecturer.title.short_name}} - MAX {{lecturer.title.max_hours}}h</li>
+    </ul>
     <mat-chip *ngFor="let link of lecturer.links; let i = index" [selectable]="true" [removable]="true" (remove)="removeLink(i, link)">
       {{link.subject.name}} | {{link.hours}}
       <mat-icon matChipRemove>cancel</mat-icon>

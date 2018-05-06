@@ -66,6 +66,16 @@ export class TitleComponent implements OnInit {
     event.stopPropagation();
   }
 
+  deleteTitle(titleToRemove: Title) {
+    const observable = this.titleService.delete(titleToRemove);
+    if (observable) {
+      observable.subscribe(() => {
+        this.titles = this.titles.filter(title => title.id !== titleToRemove.id);
+        this.dataChange.next(this.titles);
+      })
+    }
+  }
+
   private refreshElementPredicate(index, element) {
     this.titles.splice(index,1);
     this.dataChange.next(this.titles);

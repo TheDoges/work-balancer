@@ -35,5 +35,14 @@ export class SemesterService {
   getSelected(): Observable<Semester> {
     return this.selectionChange.asObservable();
   }
+
+  delete(semester: Semester) {
+    if(confirm(`Czy chcesz usunąć semestr "${semester.year} ${semester.name}"?`)) {
+      return this.apiService.delete(`semester/${semester.id}`)
+      .do(() => {
+        this.snackBar.open(`Semestr "${semester.year} ${semester.name}" został usunięty`, null, {duration: 3000});
+      })
+    }
+  }
   
 }

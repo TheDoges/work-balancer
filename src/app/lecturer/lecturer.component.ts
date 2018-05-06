@@ -74,6 +74,16 @@ export class LecturerComponent implements OnInit {
     event.stopPropagation();
   }
 
+  deleteLecturer(lecturerToRemove: Lecturer) {
+    const observable = this.lecturerService.delete(lecturerToRemove);
+    if (observable) {
+      observable.subscribe(() => {
+        this.lecturers = this.lecturers.filter(lecturer => lecturer.id !== lecturerToRemove.id);
+        this.dataChange.next(this.lecturers);
+      })
+    }
+  }
+
   compareTitles(a: Title, b:Title) {
     return a.id === b.id;
   }

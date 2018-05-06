@@ -41,6 +41,15 @@ export class LecturerService {
       this.snackBar.open(`Prowadzący "${lecturer.surname} ${lecturer.name}" został zapisany`, null, {duration: 3000});
     })
   };
+
+  delete(lecturer: Lecturer) {
+    if(confirm(`Czy chcesz usunąć prowadzącego "${lecturer.surname} ${lecturer.name}"?`)) {
+      return this.apiService.delete(`lecturer/${lecturer.id}`)
+      .do(() => {
+        this.snackBar.open(`Prowadzący "${lecturer.surname} ${lecturer.name}" został usunięty`, null, {duration: 3000});
+      })
+    }
+  }
   
   
 }

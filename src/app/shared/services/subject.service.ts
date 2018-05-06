@@ -22,8 +22,12 @@ export class SubjectService {
   };
   
   getAllForSemester(semester: Semester): Observable<Subject[]> {
-    return combineLatest(this.getAll(), this.linkService.getAllForSemester(semester), (subjects:Subject[], links:Link[]) => {
-      subjects = subjects.filter(subject => subject.semester.id === semester.id)
+    return this.getAll()
+    .map(subjects => subjects.filter(subject => subject.semester.id === semester.id));
+  };
+
+  getAllWithLinksForSemester(semester: Semester): Observable<Subject[]> {
+    return combineLatest(this.getAllForSemester(semester), this.linkService.getAllForSemester(semester), (subjects:Subject[], links:Link[]) => {
       links.forEach(link => {
         const subject = subjects.find(subject => subject.id === link.subject_id);
         if(subject) {
@@ -51,5 +55,14 @@ export class SubjectService {
       this.snackBar.open(`Przedmiot "${subject.name}" został zapisany`, null, {duration: 3000});
     })
   };
+
+  delete(subject: Subject) {
+    if(confirm(`Czy chcesz usunąć przedmiot "${subject.name}"?`)) {
+      return this.apiService.delete(`subject/${subject.id}`)
+      .do(() => {
+        this.snackBar.open(`Przedmiot "${subject.name}" został usunięty`, null, {duration: 3000});
+      })
+    }
+  }
   
 }
