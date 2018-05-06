@@ -74,6 +74,13 @@ export class LecturerComponent implements OnInit {
     event.stopPropagation();
   }
 
+  cancelLecturer(lesturerToRemove: Lecturer) {
+    this.lecturers = this.lecturers.filter(lecturer => lecturer !== lesturerToRemove);
+    this.lastIndex = null;
+    this.editedRow = null;
+    this.dataChange.next(this.lecturers);
+  }
+
   deleteLecturer(lecturerToRemove: Lecturer) {
     const observable = this.lecturerService.delete(lecturerToRemove);
     if (observable) {

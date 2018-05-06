@@ -76,6 +76,27 @@ export class SemesterComponent implements OnInit {
     }
   }
 
+  copySemester(semester: Semester) {
+    const newSemester = new Semester();
+    newSemester.template = semester;
+    const lastRow = this.editedRow;
+    const lastIndex = this.lastIndex;
+    this.lastIndex = 0;
+    this.editedRow = newSemester;
+    this.semesters.unshift(newSemester);
+    this.refreshElementPredicate(0, newSemester);
+    if (lastRow) {
+      this.refreshElementPredicate(lastIndex+1, lastRow)
+    }
+  }
+
+  cancelSemester(semesterToRemove: Semester) {
+    this.semesters = this.semesters.filter(semester => semester !== semesterToRemove);
+    this.lastIndex = null;
+    this.editedRow = null;
+    this.dataChange.next(this.semesters);
+  }
+
   private refreshElementPredicate(index, element) {
     this.semesters.splice(index,1);
     this.dataChange.next(this.semesters);

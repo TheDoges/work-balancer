@@ -16,6 +16,7 @@
       <mat-cell *matCellDef="let element; let i = index">
         <button mat-button (click)="editSemester(element, $event, i)">Zmień</button>
         <button mat-button (click)="deleteSemester(element)">Usuń</button>
+        <button mat-button (click)="copySemester(element)">Kopiuj</button>
       </mat-cell>
     </ng-container>
     
@@ -37,8 +38,9 @@
     
     <ng-container matColumnDef="optionsEdit">
       <mat-cell *matCellDef="let element; let i = index">
-        <button mat-button (click)="saveSemester(element, $event, i)">Zapisz</button>
-      </mat-cell>
+          <button mat-button (click)="saveSemester(element, $event, i)">Zapisz</button>
+          <button mat-button (click)="cancelSemester(element)" *ngIf="!element.id">Anuluj</button>
+        </mat-cell>
     </ng-container>
     
     <mat-header-row *matHeaderRowDef="['name', 'year', 'options']"></mat-header-row>

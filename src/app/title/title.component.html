@@ -108,6 +108,7 @@
     <ng-container matColumnDef="optionsEdit">
       <mat-cell *matCellDef="let element; let i = index">
         <button mat-button (click)="saveTitle(element, $event, i)">Zapisz</button>
+        <button mat-button (click)="cancelTitle(element)" *ngIf="!element.id">Anuluj</button>
       </mat-cell>
     </ng-container>
 

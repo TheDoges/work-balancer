@@ -66,7 +66,7 @@ export class SubjectComponent implements OnInit{
     return row === this.editedRow;
   }
   
-  addLecture() {
+  addSubject() {
     const semester = new Subject();
     semester.semester = this.selectedSemester;
     const lastRow = this.editedRow;
@@ -80,7 +80,7 @@ export class SubjectComponent implements OnInit{
     }
   }
   
-  editLecture(element, event, index) {
+  editSubject(element, event, index) {
     const lastElement = this.editedRow;
     const lastIndex = this.lastIndex;
     this.editedRow = element;
@@ -93,13 +93,20 @@ export class SubjectComponent implements OnInit{
     event.stopPropagation();
   }
   
-  saveLecture(element, event, index) {
+  saveSubject(element, event, index) {
     this.editedRow = null;
     this.lastIndex = null;
     this.refreshElementPredicate(index,element);
     this.subjectService.save(element)
     .subscribe(subject => {});
     event.stopPropagation();
+  }
+
+  cancelSubject(subjectToRemove: Subject) {
+    this.subjects = this.subjects.filter(subject => subject !== subjectToRemove);
+    this.lastIndex = null;
+    this.editedRow = null;
+    this.dataChange.next(this.subjects);
   }
 
   deleteSubject(subjectToRemove: Subject) {

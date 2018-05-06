@@ -39,7 +39,7 @@
     <ng-container matColumnDef="options">
       <mat-header-cell *matHeaderCellDef> Opcje </mat-header-cell>
       <mat-cell *matCellDef="let element; let i = index">
-        <button mat-button (click)="editLecture(element, $event, i)">Zmień</button>
+        <button mat-button (click)="editSubject(element, $event, i)">Zmień</button>
         <button mat-button (click)="deleteSubject(element)">Usuń</button>
       </mat-cell>
     </ng-container>
@@ -98,7 +98,8 @@
     
     <ng-container matColumnDef="optionsEdit">
       <mat-cell *matCellDef="let element; let i = index">
-        <button mat-button (click)="saveLecture(element, $event, i)">Zapisz</button>
+        <button mat-button (click)="saveSubject(element, $event, i)">Zapisz</button>
+        <button mat-button (click)="cancelSubject(element)" *ngIf="!element.id">Anuluj</button>
       </mat-cell>
     </ng-container>
     
@@ -157,5 +158,5 @@
     style="overflow: hidden"> 
   </mat-row> -->
 </mat-table>
-<button *ngIf="selectedSemester" class="fab" type="button" mat-fab matTooltip="Dodaj przedmiot" matTooltipPosition="left" (click)="addLecture()"><mat-icon>add</mat-icon></button>
+<button *ngIf="selectedSemester" class="fab" type="button" mat-fab matTooltip="Dodaj przedmiot" matTooltipPosition="left" (click)="addSubject()"><mat-icon>add</mat-icon></button>
 </div>
