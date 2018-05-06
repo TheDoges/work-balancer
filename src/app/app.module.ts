@@ -24,6 +24,7 @@ import { AuthService } from './shared/services/auth.service';
 import { CredentialService } from './shared/services/credential.service';
 import { AuthGuardService } from './shared/services/authguard.service';
 import { LoadingService } from './shared/services/loading.service';
+import { FieldService } from './shared/services/field.service';
 
 enableProdMode();
 
@@ -61,7 +62,8 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([
     AuthService,
     AuthGuardService,
     CredentialService,
-    LoadingService
+    LoadingService,
+    FieldService
   ],
   bootstrap: [AppComponent]
 })

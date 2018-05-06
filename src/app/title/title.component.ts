@@ -62,7 +62,9 @@ export class TitleComponent implements OnInit {
     this.lastIndex = null;
     this.refreshElementPredicate(index,element);
     this.titleService.save(element)
-    .subscribe(subject => {});
+    .subscribe(response => {
+      element.deserialize(response.data)
+    });
     event.stopPropagation();
   }
 

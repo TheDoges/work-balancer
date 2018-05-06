@@ -54,7 +54,10 @@ export class PlanningTableComponent implements OnInit {
   }
   
   removeLink(subject: Subject, index: number, link: Link) {
-    this.linkService.delete(link);
+    const observable = this.linkService.delete(link);
+    if (observable) {
+      observable.toPromise();
+    }
   }
   
   addLink(subject: Subject) {
@@ -71,7 +74,12 @@ export class PlanningTableComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(data => {
       if (data) {
-        this.linkService.add(data.link, subject, data.link.lecturer);
+        const observable = this.linkService.add(data.link, subject, data.link.lecturer);
+        if (observable) {
+          observable.subscribe(response => {
+            data.link.id = response.data.id.toString();
+          })
+        }
       }
     });
   }
@@ -87,7 +95,10 @@ export class PlanningTableComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(data => {
       if (data) {
-        this.linkService.update(data.link, subject, link.lecturer);
+        const observable = this.linkService.update(data.link, subject, link.lecturer);
+        if (observable) {
+          observable.toPromise()
+        }
       }
     });
   }

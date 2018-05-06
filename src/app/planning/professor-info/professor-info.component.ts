@@ -18,7 +18,10 @@ export class ProfessorInfoComponent implements OnInit {
   }
   
   removeLink(index: number, link: Link) {
-    this.linkService.delete(link);
+    const observable = this.linkService.delete(link);
+    if (observable) {
+      observable.toPromise();
+    }
   }
   
 }

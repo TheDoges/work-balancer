@@ -46,7 +46,7 @@ export class Subject implements Serializable<Subject, InputSubject, OutputSubjec
             field_id: this.field? this.field.id : null,
             semester_id: this.semester? this.semester.id : null,
             degree_id: this.degree? this.degree.id : null,
-            semesterNumber: this.semesterNumber
+            semester_number: this.semesterNumber
         };
     }
     
@@ -88,5 +88,5 @@ export interface OutputSubject {
     field_id: string;
     semester_id: string;
     degree_id: string;
-    semesterNumber: number;
+    semester_number: number;
 }

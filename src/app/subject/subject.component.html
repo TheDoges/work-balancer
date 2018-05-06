@@ -36,6 +36,11 @@
       <mat-cell *matCellDef="let element"> {{element.semesterNumber}} </mat-cell>
     </ng-container>
     
+    <ng-container matColumnDef="hours">
+      <mat-header-cell *matHeaderCellDef> Liczba godzin </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.hours}} </mat-cell>
+    </ng-container>
+    
     <ng-container matColumnDef="options">
       <mat-header-cell *matHeaderCellDef> Opcje </mat-header-cell>
       <mat-cell *matCellDef="let element; let i = index">
@@ -66,13 +71,13 @@
     
     <ng-container matColumnDef="fieldEdit">
       <mat-cell *matCellDef="let element">
-        <!-- <mat-form-field>
-          <mat-select [(ngModel)]="element.field">
-            <mat-option *ngFor="let studyForm of studyForms" [value]="studyForm">
-              {{ studyForm.name }}
+        <mat-form-field>
+          <mat-select [(ngModel)]="element.field" [compareWith]="compareFields">
+            <mat-option *ngFor="let field of fields" [value]="field">
+              {{ field.name }} - {{field.type}}
             </mat-option>
           </mat-select>
-        </mat-form-field> -->
+        </mat-form-field>
       </mat-cell>
     </ng-container>
     
@@ -92,6 +97,14 @@
       <mat-cell *matCellDef="let element">
         <mat-form-field>
           <input matInput type="number" [(ngModel)]="element.semesterNumber"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="hoursEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput type="number" [(ngModel)]="element.hours"/>
         </mat-form-field>
       </mat-cell>
     </ng-container>
@@ -144,15 +157,15 @@
       </mat-cell>
     </ng-container> -->
     
-    <mat-header-row *matHeaderRowDef="['name', 'type', 'field', 'degree', 'semesterNumber', 'options']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['name', 'type', 'field', 'degree', 'semesterNumber', 'options'];"
+    <mat-header-row *matHeaderRowDef="['name', 'type', 'field', 'degree', 'semesterNumber', 'hours', 'options']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name', 'type', 'field', 'degree', 'semesterNumber', 'hours', 'options'];"
     matRipple 
     class="element-row"  
     [class.expanded]="expandedElement === row" 
     (click)="expandedElement = expandedElement === row? null : row"
     style="overflow: hidden">
   </mat-row>
-  <mat-row *matRowDef="let row; columns: ['nameEdit', 'typeEdit', 'fieldEdit', 'degreeEdit', 'semesterNumberEdit', 'optionsEdit']; when: isEditableRow"></mat-row>
+  <mat-row *matRowDef="let row; columns: ['nameEdit', 'typeEdit', 'fieldEdit', 'degreeEdit', 'semesterNumberEdit', 'hoursEdit', 'optionsEdit']; when: isEditableRow"></mat-row>
   <!-- <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
     [@detailExpand]="row.element === expandedElement ? 'expanded' : 'collapsed'"
     style="overflow: hidden"> 

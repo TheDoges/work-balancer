@@ -70,7 +70,9 @@ export class LecturerComponent implements OnInit {
     this.lastIndex = null;
     this.refreshElementPredicate(index,element);
     this.lecturerService.save(element)
-    .subscribe(subject => {});
+    .subscribe(response => {
+      element.deserialize(response.data)
+    });
     event.stopPropagation();
   }
 

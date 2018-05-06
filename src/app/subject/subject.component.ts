@@ -10,6 +10,8 @@ import { DegreeService } from '../shared/services/degree.service';
 import { Observable } from 'rxjs';
 import { Semester } from '../shared/models/semester';
 import { SemesterService } from '../shared/services/semester.service';
+import { FieldService } from '../shared/services/field.service';
+import { Field } from '../shared/models/field';
 
 @Component({
   selector: 'app-subject',
@@ -31,12 +33,13 @@ export class SubjectComponent implements OnInit{
   lastIndex;
   selectedSemester: Semester;
   semesters: Semester[];
+  fields: Field[];
   
   subjects: Subject[];
   degrees: Degree[];
   subjectTypes: SubjectType[];
   
-  constructor(private degreeService: DegreeService, private subjectService: SubjectService, private semesterService: SemesterService) {}
+  constructor(private degreeService: DegreeService, private subjectService: SubjectService, private semesterService: SemesterService, private fieldService: FieldService) {}
   
   ngOnInit(): void {
     this.semesterService.getAll()
@@ -59,6 +62,9 @@ export class SubjectComponent implements OnInit{
     
     this.degreeService.getAll()
     .subscribe(degrees => this.degrees = degrees);
+
+    this.fieldService.getAll()
+    .subscribe(fields => this.fields = fields)
   }
   
   isExpansionDetailRow = (_, row) => row.hasOwnProperty('detailRow');
@@ -98,7 +104,9 @@ export class SubjectComponent implements OnInit{
     this.lastIndex = null;
     this.refreshElementPredicate(index,element);
     this.subjectService.save(element)
-    .subscribe(subject => {});
+    .subscribe(response => {
+      element.deserialize(response.data)
+    });
     event.stopPropagation();
   }
 
@@ -135,6 +143,10 @@ export class SubjectComponent implements OnInit{
   }
   
   compareDegrees(a: Degree, b:Degree) {
+    return a.id === b.id;
+  }
+
+  compareFields(a: Field, b:Field) {
     return a.id === b.id;
   }
 }

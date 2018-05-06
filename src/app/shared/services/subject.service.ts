@@ -47,7 +47,7 @@ export class SubjectService {
     return Observable.of(subjectTypes);
   };
   
-  save(subject: Subject): Observable<Subject> {
+  save(subject: Subject): Observable<any> {
     const payload: OutputSubject = subject.serialize();
     const request = subject.id? this.apiService.put(`subject/${subject.id}`, payload) : this.apiService.post('subject', payload);
     return request
