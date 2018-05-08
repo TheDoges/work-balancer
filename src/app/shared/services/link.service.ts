@@ -1,15 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Link } from '../models/link';
+import { Link, RawLink } from '../models/link';
 import { Semester } from '../models/semester';
 import { Subject } from '../models/subject';
 import { Lecturer } from '../models/lecturer';
+import { ApiService } from './api.service';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class LinkService {
   
-  constructor() { }
+  constructor(private apiService: ApiService) { }
   
+  getAll(): Observable<Link[]> {
+    return this.apiService.get('lecturer_subject')
+    .pipe(map(response => response.data))
+    .pipe(map((links: RawLink[]) => links.map(link => new Link().deserialize(link))))
+  }
+
   getAllForSemester(semester: Semester): Observable<Link[]> {
     // Tu będzie request
     return Observable.of([
