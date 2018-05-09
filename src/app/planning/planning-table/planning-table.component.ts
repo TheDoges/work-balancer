@@ -85,9 +85,10 @@ export class PlanningTableComponent implements OnInit {
   }
   
   editLink(subject: Subject, index: number, link: Link) {
+    const lecturer = link.lecturer;
     const dialogRef = this.dialog.open(ProfessorSelectComponent, {
       data: {
-        link: {...link},
+        link: link,
         lecturers: this.lecturers,
         max: subject.hours - subject.linkHours + link.hours,
         type: subject.type
@@ -95,7 +96,7 @@ export class PlanningTableComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(data => {
       if (data) {
-        const observable = this.linkService.update(data.link, subject, link.lecturer);
+        const observable = this.linkService.update(data.link, subject, lecturer);
         if (observable) {
           observable.toPromise()
         }

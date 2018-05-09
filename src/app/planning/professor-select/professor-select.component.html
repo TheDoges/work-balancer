@@ -15,6 +15,6 @@
   name="hours"
   [(ngModel)]="data.link.hours">
 </mat-slider>
-<button type="submit" mat-raised-button color="primary">Dodaj</button>
+<button type="submit" mat-raised-button color="primary">{{data.link.id? "Zapisz" : "Dodaj"}}</button>
 <button mat-raised-button [mat-dialog-close]=null >Anuluj</button>
 </form>
