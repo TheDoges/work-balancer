@@ -21,7 +21,7 @@ export class Link implements Serializable<Link, RawLink, RawLink> {
         return {
             id: +this.id,
             lecturer_id: this.lecturer? +this.lecturer.id : +this.lecturer_id,
-            subject_id: +this.subject_id,
+            subject_id: this.subject? +this.subject.id : +this.subject_id,
             hours: this.hours
         };
     }

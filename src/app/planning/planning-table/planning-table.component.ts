@@ -53,11 +53,12 @@ export class PlanningTableComponent implements OnInit {
     })
   }
   
-  removeLink(subject: Subject, index: number, link: Link) {
+  removeLink(event, subject: Subject, index: number, link: Link) {
     const observable = this.linkService.delete(link);
     if (observable) {
       observable.toPromise();
     }
+    event.stopPropagation();
   }
   
   addLink(subject: Subject) {

@@ -50,9 +50,9 @@
         <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutAlign="start center">
           <mat-chip-list #chipList [selectable]="true">
             <mat-chip class="linkChip" *ngFor="let link of element.links; let i = index" [selectable]="true"
-            [removable]="true" (remove)="removeLink(element, i, link)" (click)="editLink(element, i, link)">
+            [removable]="true" (click)="editLink(element, i, link)">
             {{link.lecturer.surname}} {{link.lecturer.name}} | {{link.hours}}
-            <mat-icon matChipRemove>cancel</mat-icon>
+            <mat-icon matChipRemove (click)="removeLink($event, element, i, link)">cancel</mat-icon>
           </mat-chip>
         </mat-chip-list>
         <!-- <mat-form-field>

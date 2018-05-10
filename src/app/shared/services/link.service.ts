@@ -19,16 +19,9 @@ export class LinkService {
   }
 
   getAllForSemester(semester: Semester): Observable<Link[]> {
-    // Tu będzie request
-    // return Observable.of([
-    //   new Link().deserialize({
-    //     id: "1", lecturer_id: "1", subject_id: "1", hours: 20
-    //   }),
-    //   new Link().deserialize({
-    //     id: "2", lecturer_id: "2", subject_id: "2", hours: 10
-    //   })
-    // ]);
-    return this.getAll();
+    return this.apiService.post('lecturer-subject/semester', {semester_id: +semester.id})
+    .pipe(map(response => response.data))
+    .pipe(map((links: RawLink[]) => links.map(link => new Link().deserialize(link))))
   }
   
   add(link: Link, subject: Subject, lecturer: Lecturer): Observable<any> | null {
