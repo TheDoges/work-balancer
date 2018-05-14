@@ -19,7 +19,7 @@ export class LinkService {
   }
 
   getAllForSemester(semester: Semester): Observable<Link[]> {
-    return this.apiService.post('lecturer-subject/semester', {semester_id: +semester.id})
+    return this.apiService.get(`semester/${semester.id}/lecturer-subject`)
     .pipe(map(response => response.data))
     .pipe(map((links: RawLink[]) => links.map(link => new Link().deserialize(link))))
   }

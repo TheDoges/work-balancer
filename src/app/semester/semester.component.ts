@@ -63,6 +63,7 @@ export class SemesterComponent implements OnInit {
     this.refreshElementPredicate(index,element);
     this.semesterService.save(element)
     .subscribe(response => {
+      debugger;
       element.deserialize(response.data)
     });
     event.stopPropagation();
@@ -74,6 +75,12 @@ export class SemesterComponent implements OnInit {
       observable.subscribe(() => {
         this.semesters = this.semesters.filter(semester => semester.id !== semesterToRemove.id);
         this.dataChange.next(this.semesters);
+        this.semesterService.getSelected()
+        .subscribe((semester: Semester) => {
+          if(semester !== null && semester.id === semesterToRemove.id) {
+            this.semesterService.setSelected(null);
+          }
+        })
       })
     }
   }

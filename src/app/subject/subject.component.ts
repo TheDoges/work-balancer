@@ -1,4 +1,4 @@
-import {Component, Pipe, PipeTransform, OnInit} from '@angular/core';
+import {Component, Pipe, PipeTransform, OnInit, OnDestroy} from '@angular/core';
 import { trigger, transition, state, style, animate } from '@angular/animations';
 import { DataSource } from '@angular/cdk/table';
 import * as rxjs from 'rxjs';
@@ -7,7 +7,7 @@ import { SubjectService } from '../shared/services/subject.service';
 import { Subject, SubjectType } from '../shared/models/subject';
 import { Degree } from '../shared/models/degree';
 import { DegreeService } from '../shared/services/degree.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Semester } from '../shared/models/semester';
 import { SemesterService } from '../shared/services/semester.service';
 import { FieldService } from '../shared/services/field.service';
@@ -25,7 +25,7 @@ import { Field } from '../shared/models/field';
     ]),
   ],
 })
-export class SubjectComponent implements OnInit{
+export class SubjectComponent implements OnInit, OnDestroy{
   dataChange: rxjs.Subject<Subject[]> = new rxjs.Subject<Subject[]>();
   dataSource = new ExampleDataSource(this.dataChange);
   expandedElement;
@@ -38,14 +38,14 @@ export class SubjectComponent implements OnInit{
   subjects: Subject[];
   degrees: Degree[];
   subjectTypes: SubjectType[];
+  currentSemesterSubscription: Subscription;
   
   constructor(private degreeService: DegreeService, private subjectService: SubjectService, private semesterService: SemesterService, private fieldService: FieldService) {}
   
   ngOnInit(): void {
     this.semesterService.getAll()
     .subscribe(semesters => this.semesters = semesters);
-
-    this.semesterService.getSelected()
+    this.currentSemesterSubscription = this.semesterService.getSelected()
     .subscribe(semester => {
       if (semester) {
         this.selectedSemester = semester;
@@ -70,6 +70,10 @@ export class SubjectComponent implements OnInit{
   isExpansionDetailRow = (_, row) => row.hasOwnProperty('detailRow');
   isEditableRow = (_, row) => {
     return row === this.editedRow;
+  }
+
+  ngOnDestroy(): void {
+    this.currentSemesterSubscription.unsubscribe();
   }
   
   addSubject() {

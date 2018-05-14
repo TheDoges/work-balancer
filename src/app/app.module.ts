@@ -26,8 +26,6 @@ import { AuthGuardService } from './shared/services/authguard.service';
 import { LoadingService } from './shared/services/loading.service';
 import { FieldService } from './shared/services/field.service';
 
-enableProdMode();
-
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([
   { path: '', redirectTo: '/planning', pathMatch: 'full' }
 ], { useHash: true });

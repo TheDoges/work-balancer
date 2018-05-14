@@ -9,7 +9,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 @Injectable()
 export class SemesterService {
 
-  private selectionChange: BehaviorSubject<Semester> = new BehaviorSubject(null);
+  private selectionChange: Subject<Semester> = new BehaviorSubject(null);
   
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) { }
   
@@ -21,7 +21,14 @@ export class SemesterService {
 
   save(semester: Semester) {
     const payload: RawSemester = semester.serialize();
-    const request = semester.id? this.apiService.put(`semester/${semester.id}`, payload) : this.apiService.post('semester', payload);
+    let request;
+    if(payload.id) {
+      request = this.apiService.put(`semester/${semester.id}`, payload);
+    } else if (payload.template_id) {
+      request = this.apiService.post('semester/copy', payload);
+    } else {
+      request = this.apiService.post('semester', payload);
+    }
     return request
     .do(() => {
       this.snackBar.open(`Semester "${semester.name} ${semester.year}" został zapisany`, null, {duration: 3000});
