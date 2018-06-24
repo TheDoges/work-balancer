@@ -63,6 +63,18 @@ export class Lecturer implements Serializable<Lecturer, InputLecturer, OutputLec
     hasMaxError() {
         return this.linkHours > this.title.max_hours;
     }
+
+    getStationaryHours() {
+        return this.links
+        .filter(link => link.subject.field.type === 'STACJONARNE')
+        .reduce((sum, link) => sum + link.hours, 0);
+    }
+
+    getRemoteHours() {
+        return this.links
+        .filter(link => link.subject.field.type === 'NIESTACJONARNE')
+        .reduce((sum, link) => sum + link.hours, 0);
+    }
 }
 
 export interface InputLecturer {

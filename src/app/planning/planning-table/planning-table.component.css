@@ -28,6 +28,10 @@ mat-row:hover {
     background-color: rgba(200, 200, 200, 0.3);
 }
 
+mat-row:nth-child(odd):not(:hover) {
+    background-color: rgba(224, 224, 224, 0.3);
+}
+
 mat-cell mat-form-field {
     width: 100%;
 }

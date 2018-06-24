@@ -7,11 +7,12 @@ import {
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import {
-  Http, Headers
+  Http, Headers, ResponseContentType
 } from '@angular/http';
 import { MatSnackBar } from '@angular/material';
 import { CredentialService} from './credential.service';
 import { LoadingService } from './loading.service';
+import { saveAs } from 'file-saver/FileSaver';
 
 const API_PATH = 'http://localhost:4200/api/';
 
@@ -65,6 +66,25 @@ export class ApiService {
     .finally(() => this.loadingService.hide(key))
     .catch(this.formatErrors.bind(this))
     .map((res: Response) => this.parseResponse(res));
+  }
+
+  getApiUrl(): string {
+    return API_PATH;
+  }
+
+  download(path: string) {
+    const key = this.generateBusyKey();
+    this.loadingService.show(key);
+    return this.http.get(`${API_PATH}${path}`, { headers: this.setHeaders(), responseType: ResponseContentType.Blob} )
+    .finally(() => this.loadingService.hide(key))
+    .catch(this.formatErrors.bind(this))
+    .subscribe((response: any) => {
+      const contentDispositionHeader: string = response.headers.get('Content-Disposition');
+      const parts: string[] = contentDispositionHeader.split(';');
+      const filename = parts[1].split('=')[1].slice(1,-1);
+      const blob = new Blob([response._body], { type: 'text/plain' });
+      saveAs(blob, filename);
+    })
   }
   
   private setHeaders(): Headers {

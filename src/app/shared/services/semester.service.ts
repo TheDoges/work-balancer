@@ -35,6 +35,10 @@ export class SemesterService {
     })
   };
 
+  print(semester: Semester) {
+    this.apiService.download(`semester/${semester.id}/pdf-view`);
+  }
+
   setSelected(semester: Semester) {
     this.selectionChange.next(semester);
   }

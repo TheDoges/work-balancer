@@ -9,9 +9,11 @@
     <ul>
       <li class="rule" [ngClass]="{'warning': lecturer.hasMinWarning(), 'error': lecturer.hasMinError()}">{{lecturer.title.short_name}} - MIN {{lecturer.title.min_hours}}h</li>
       <li class="rule" [ngClass]="{'warning': lecturer.hasMaxWarning(), 'error': lecturer.hasMaxError()}">{{lecturer.title.short_name}} - MAX {{lecturer.title.max_hours}}h</li>
+      <li>STACJONARNE: {{lecturer.getStationaryHours()}}h</li>
+      <li>NIESTACJONARNE: {{lecturer.getRemoteHours()}}h</li>
     </ul>
     <mat-chip *ngFor="let link of lecturer.links; let i = index" [selectable]="true" [removable]="true" (remove)="removeLink(i, link)">
-      {{link.subject.name}} | {{link.hours}}
+      {{link.subject.name}}-{{link.subject.type}} | {{link.hours}}
       <mat-icon matChipRemove>cancel</mat-icon>
     </mat-chip>
   </mat-chip-list>

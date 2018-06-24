@@ -63,6 +63,13 @@ export class Title implements Serializable<Title, RawTitle, RawTitle> {
             warning_percent: this.warning_percent
         };
     }
+
+    includesString(needle: string) {
+        needle = needle.toLowerCase();
+        return ((!!this.name && this.name.toLowerCase().includes(needle)) ||
+            (!!this.short_name && this.short_name.toLowerCase().includes(needle)) ||
+            (!!this.full_name && this.full_name.toLowerCase().includes(needle)));
+    }
 }
 
 export interface RawTitle {

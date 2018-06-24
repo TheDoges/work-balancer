@@ -6,6 +6,7 @@
         <span>{{ professor.surname }} {{ professor.name }}</span>
       </mat-option>
     </mat-autocomplete>
+    <mat-checkbox name="permissionCheck" [(ngModel)]="lecturerWithPermissions" (change)="setLecturerFilter(lecturerWithPermissions)">Sprawdź uprawnienia</mat-checkbox>
   </mat-form-field>
   <mat-slider
   [max]="data.max"

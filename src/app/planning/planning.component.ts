@@ -74,7 +74,11 @@ export class PlanningComponent implements OnInit, OnDestroy {
   
   filterLecturers(query: string) {
     query = query.toLowerCase();
-    this.filteredLecturers = this.lecturers.filter(lecturer => lecturer.name.toLowerCase().includes(query) || lecturer.surname.toLowerCase().includes(query));
+    this.filteredLecturers = this.lecturers.filter(lecturer => lecturer.name.toLowerCase().includes(query) || lecturer.surname.toLowerCase().includes(query) || lecturer.title.includesString(query));
+  }
+
+  print(semester: Semester) {
+    this.semesterService.print(semester);
   }
   
 }
