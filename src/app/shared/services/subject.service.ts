@@ -42,7 +42,10 @@ export class SubjectService {
   getSubjectTypes(): Observable<SubjectType[]> {
     const subjectTypes = [
       SubjectType.lab,
-      SubjectType.lec
+      SubjectType.lec,
+      SubjectType.pro,
+      SubjectType.exe,
+      SubjectType.sem
     ];
     return Observable.of(subjectTypes);
   };
