@@ -18,7 +18,7 @@
     
     <ng-container matColumnDef="lec_permission">
       <mat-header-cell *matHeaderCellDef> Wykł. </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.lec_permission? "Tak": "Nie"}} </mat-cell>
+      <mat-cell *matCellDef="let element" class="yoko-kurwa"> {{element.lec_permission? "Tak": "Nie"}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="exe_permission">
@@ -76,31 +76,31 @@
     </ng-container>
 
     <ng-container matColumnDef="lab_permissionEdit">
-      <mat-cell *matCellDef="let element">
+      <mat-cell *matCellDef="let element" class="custom-mat-checkbox">
         <mat-checkbox [(ngModel)]="element.lab_permission"></mat-checkbox>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="lec_permissionEdit">
-      <mat-cell *matCellDef="let element">
+      <mat-cell *matCellDef="let element" class="custom-mat-checkbox">
         <mat-checkbox [(ngModel)]="element.lec_permission"></mat-checkbox>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="exe_permissionEdit">
-      <mat-cell *matCellDef="let element">
+      <mat-cell *matCellDef="let element" class="custom-mat-checkbox">
         <mat-checkbox [(ngModel)]="element.exe_permission"></mat-checkbox>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="sem_permissionEdit">
-      <mat-cell *matCellDef="let element">
+      <mat-cell *matCellDef="let element" class="custom-mat-checkbox">
         <mat-checkbox [(ngModel)]="element.sem_permission"></mat-checkbox>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="pro_permissionEdit">
-      <mat-cell *matCellDef="let element">
+      <mat-cell *matCellDef="let element" class="custom-mat-checkbox">
         <mat-checkbox [(ngModel)]="element.pro_permission"></mat-checkbox>
       </mat-cell>
     </ng-container>
