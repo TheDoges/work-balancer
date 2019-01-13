@@ -1,0 +1,45 @@
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1) {
+    text-align: left;
+    justify-content: flex-start;
+    flex: 3;
+}
+
+.mat-cell:nth-child(7),
+.mat-header-cell:nth-child(7) {
+    text-align: left;
+    justify-content: flex-start;
+    flex: 8;
+}
+
+.mat-cell,
+.mat-header-cell{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.warn {
+    color: red;
+}
+
+mat-row.highlight,
+mat-row:hover {
+    background-color: rgba(200, 200, 200, 0.3);
+}
+
+mat-row:nth-child(odd):not(:hover) {
+    background-color: rgba(224, 224, 224, 0.3);
+}
+
+mat-cell mat-form-field {
+    width: 100%;
+}
+
+mat-row {
+    cursor: pointer;
+}
+
+.linkChip {
+    margin: .1rem;
+}

@@ -1,0 +1,21 @@
+<form (submit)="closeDialog(data)" fxLayout="column">
+  <mat-form-field>
+    <input matInput placeholder="Prowadzący" [matAutocomplete]="auto" [formControl]="professorCtrl" [(ngModel)]="data.link.lecturer">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="formatProfessor">
+      <mat-option *ngFor="let professor of filteredProfessors | async" [value]="professor">
+        <span>{{ professor.surname }} {{ professor.name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+    <mat-checkbox name="permissionCheck" [(ngModel)]="lecturerWithPermissions" (change)="setLecturerFilter(lecturerWithPermissions)">Sprawdź uprawnienia</mat-checkbox>
+  </mat-form-field>
+  <mat-slider
+  [max]="data.max"
+  [min]="0"
+  [thumb-label]="true"
+  [tick-interval]="10"
+  name="hours"
+  [(ngModel)]="data.link.hours">
+</mat-slider>
+<button type="submit" mat-raised-button color="primary">{{data.link.id? "Zapisz" : "Dodaj"}}</button>
+<button mat-raised-button [mat-dialog-close]=null >Anuluj</button>
+</form>

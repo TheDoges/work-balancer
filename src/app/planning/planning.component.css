@@ -1,0 +1,21 @@
+mat-sidenav {
+    width: 15vw;
+    top: 64px;
+}
+
+.professor-filter {
+    width:100%;
+    padding: 0 1rem;
+    box-sizing: border-box
+}
+
+fab-speed-dial {
+    position: fixed;
+    bottom: 1rem;
+    right: calc(1rem + 15vw);
+    z-index: 100;
+}
+
+.fab-button {
+    visibility: visible !important;
+}

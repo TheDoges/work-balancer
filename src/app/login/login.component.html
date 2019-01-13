@@ -1,0 +1,20 @@
+<div fxFlex fxLayout="column" fxLayoutAlign="center center">
+  <form>
+  <mat-card fxLayout="column">
+    <mat-card-title>
+      Logowanie
+    </mat-card-title>
+      <mat-card-content fxLayout="column">
+        <mat-form-field>
+          <input matInput placeholder="Email" #username autofocus type="email" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Hasło" #password type="password"/>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+        <button mat-raised-button color="primary" (click)="login(username.value, password.value)">Zaloguj</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

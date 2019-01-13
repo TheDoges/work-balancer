@@ -1,0 +1,81 @@
+<div class="mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+    
+    <!--- Note that these columns can be defined in any order.
+      The actual rendered columns are set as a property on the row definition" -->
+      
+      <!-- Position Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Przedmiot </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.name}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Typ </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.type}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="degree">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Stopień </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.degree.prefix}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fieldName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Kierunek </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.field.name}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fieldType">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Stac. </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.field.type === 'STACJONARNE'? "Tak" : "Nie"}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef> Liczba godzin </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-form-field>
+            <input matInput [(ngModel)]="element.hours" (change)="updateSubjectHours(element)" type="number"/>
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="proffessors">
+        <mat-header-cell *matHeaderCellDef> Prowadzący </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxLayout="row" fxLayoutAlign="start center">
+          <mat-chip-list #chipList [selectable]="true">
+            <mat-chip class="linkChip" *ngFor="let link of element.links; let i = index" [selectable]="true"
+            [removable]="true" (click)="editLink(element, i, link)">
+            {{link.lecturer.surname}} {{link.lecturer.name}} | {{link.hours}}
+            <mat-icon matChipRemove (click)="removeLink($event, element, i, link)">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+        <!-- <mat-form-field>
+          <input matInput placeholder="Nowy"
+          [matChipInputFor]="chipList"
+          [matChipInputAddOnBlur]="true"
+          (matChipInputTokenEnd)="add($event)" />
+        </mat-form-field> -->
+        <button mat-icon-button color="primary" (click)="addLink(element)">
+          <mat-icon aria-label="Dodaj prowadzącego">add</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    
+    <!-- Weight Column -->
+    <ng-container matColumnDef="hours">
+      <mat-header-cell *matHeaderCellDef> Liczba godzin </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="{'warn': element.linkHours !== element.hours}">
+        {{element.linkHours}} / {{element.hours}}
+      </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'highlight': selectedClassId === row.name}" (click)="selectSubject(row)"></mat-row>
+  </mat-table>
+</div>

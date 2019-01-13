@@ -1,0 +1,53 @@
+{
+    "lecturer":{
+        "id": 1,
+        "name": "Krzysztof",
+        "surname": "Zatwarnicki",
+        "titles": [<title>],
+        "positions": [<position>] // stanowisko
+    },
+    "subject": {
+        "id": 1,
+        "name": "Bazy danych 1",
+        "type": "lec",
+        "hours": 50,
+        "field_id": 1,
+        "semester_id": 1,
+        "semeter_number": 7,
+        "links?": [<link>]
+    },
+    "field": {
+        "id": 1,
+        "name": "Informatyka",
+        "type": "STACJONARNE",
+        "degree_id": 1
+    },
+    "degree": {
+        "id": 1,
+        "name": "Pierwszego stopnia",
+        "prefix": "I",
+        "number": 1
+    },
+    "semester": {
+        "id": 1,
+        "type": "LETNI",
+        "year": "2017/2018"
+    },
+    "link": {
+        "lecturer_id": 1,
+        "hours": 4,
+        "language": "PL"
+    },
+    "title": {
+        "name": "Doktorant",
+        "short_name": "",
+        "lab_permission": true,
+        "lec_permission": true,
+        "exe_permission": true,
+        "sem_permission": true,
+        "pro_permission": true,
+        "min_hours": 100,
+        "max_hours": 150,
+        "warning_percent": 10
+    }
+}

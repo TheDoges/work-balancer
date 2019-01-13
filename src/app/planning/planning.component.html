@@ -1,0 +1,77 @@
+<mat-sidenav-container>
+  <mat-sidenav-content>
+    <!-- <mat-accordion>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title> -->
+            <!-- Studia inżynierskie -->
+            Semestr
+            <mat-form-field>
+              <mat-select [(ngModel)]="selectedSemester" (change)="setSemester(selectedSemester)" [compareWith]="compareSemesters">
+                <mat-option *ngFor="let semester of semesters" [value]="semester">
+                  {{ semester.year }} - {{ semester.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          <!-- </mat-panel-title>
+        </mat-expansion-panel-header> -->
+        <app-planning-table [lecturers]="lecturers" (subjectChange)="setSubject($event)"></app-planning-table>
+      <!-- </mat-expansion-panel> -->
+      <!-- <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Studia magisterskie
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-planning-table [lecturers]="lecturers" (lectureChange)="setSubject($event)"></app-planning-table>    
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Studia doktoranckie
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-planning-table [lecturers]="lecturers" (lectureChange)="setSubject($event)"></app-planning-table>
+      </mat-expansion-panel> -->
+    <!-- </mat-accordion> -->
+    <fab-speed-dial direction="up">
+      <button type="button" mat-fab fab-toggle matTooltip="Akcje" matTooltipPosition="left"><mat-icon>menu</mat-icon></button>
+      
+      <!-- <button type="button" mat-mini-fab fab-button color="primary" matTooltip="Zapisz" matTooltipPosition="left"><mat-icon>save</mat-icon></button> -->
+      <button type="button" mat-mini-fab fab-button color="primary" matTooltip="Drukuj" matTooltipPosition="left" [disabled]="!selectedSemester" (click)="print(selectedSemester)"><mat-icon>print</mat-icon></button>
+    </fab-speed-dial>
+  </mat-sidenav-content>
+  <mat-sidenav #sideNav mode="side" position="end" class="mat-elevation-z8" fixedInViewport="true" fixedTopGap="64" opened="true" *ngIf="subjects && lecturers">
+    <div *ngIf="subject">
+      <mat-toolbar>{{subject.name}}</mat-toolbar>
+      <mat-list>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              2015/2016
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          Brak przypisań
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              2016/2017
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          Brak przypisań
+        </mat-expansion-panel>
+      </mat-list>
+    </div>
+    <mat-toolbar>Prowadzący</mat-toolbar>
+    <mat-form-field class="professor-filter">
+      <input matInput placeholder="Filtruj" (keyup)="filterLecturers($event.target.value)" [(ngModel)]="professorFilter"/>
+      <button mat-button *ngIf="professorFilter" matSuffix mat-icon-button aria-label="Clear" (click)="professorFilter=''; filterLecturers('')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-accordion>
+      <app-professor-info *ngFor="let lecturer of filteredLecturers" [lecturer]="lecturer"></app-professor-info>
+    </mat-accordion>
+  </mat-sidenav>
+</mat-sidenav-container>

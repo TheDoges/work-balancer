@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+  Didacticos 2.0
+  <span fxFlex></span>
+  <span *ngIf="username">
+    <button mat-button routerLink="/planning">Planowanie</button>
+    <button mat-button routerLink="/lecturers">Prowadzący</button>
+    <button mat-button routerLink="/subjects">Przedmioty</button>
+    <button mat-button routerLink="/titles">Tytuły</button>
+    <button mat-button routerLink="/semesters">Semestry</button>
+  </span>
+  <button mat-button [matMenuTriggerFor]="menu">{{username}}</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()" >Wyloguj</button>
+    <button mat-menu-item routerLink="/register">Rejestracja</button>
+  </mat-menu>
+</mat-toolbar>

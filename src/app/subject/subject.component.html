@@ -1,0 +1,175 @@
+<div class="mat-elevation-z8">
+  Semestr
+  <mat-form-field>
+    <mat-select [(ngModel)]="selectedSemester" (change)="setSemester(selectedSemester)" [compareWith]="compareSemesters">
+      <mat-option *ngFor="let semester of semesters" [value]="semester">
+        {{ semester.year }} - {{ semester.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+    
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Przedmiot </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef> Rodzaj </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.type}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="field">
+      <mat-header-cell *matHeaderCellDef> Kierunek </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.field? element.field.name+" / "+element.field.type : ""}}</mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="degree">
+      <mat-header-cell *matHeaderCellDef> Tryb studiów </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.degree? element.degree.name+" / "+element.degree.alias : ""}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="semesterNumber">
+      <mat-header-cell *matHeaderCellDef> Semestr </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.semesterNumber}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="hours">
+      <mat-header-cell *matHeaderCellDef> Liczba godzin </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.hours}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="options">
+      <mat-header-cell *matHeaderCellDef> Opcje </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <button mat-button (click)="editSubject(element, $event, i)">Zmień</button>
+        <button mat-button (click)="deleteSubject(element)">Usuń</button>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="nameEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput [(ngModel)]="element.name"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="typeEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <mat-select [(ngModel)]="element.type">
+            <mat-option *ngFor="let type of subjectTypes" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="fieldEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <mat-select [(ngModel)]="element.field" [compareWith]="compareFields">
+            <mat-option *ngFor="let field of fields" [value]="field">
+              {{ field.name }} - {{field.type}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="degreeEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <mat-select [(ngModel)]="element.degree" [compareWith]="compareDegrees">
+            <mat-option *ngFor="let degree of degrees" [value]="degree">
+              {{ degree.alias }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="semesterNumberEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput type="number" [(ngModel)]="element.semesterNumber"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="hoursEdit">
+      <mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <input matInput type="number" [(ngModel)]="element.hours"/>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="optionsEdit">
+      <mat-cell *matCellDef="let element; let i = index">
+        <button mat-button (click)="saveSubject(element, $event, i)">Zapisz</button>
+        <button mat-button (click)="cancelSubject(element)" *ngIf="!element.id">Anuluj</button>
+      </mat-cell>
+    </ng-container>
+    
+    <!-- <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let detail"> 
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Company (disabled)" disabled value="Google">
+          </mat-form-field>
+          
+          <table class="example-full-width" cellspacing="0"><tr>
+            <td><mat-form-field class="example-full-width">
+              <input matInput placeholder="First name" name="name" [(ngModel)]=detail.name>
+            </mat-form-field></td>
+            <td><mat-form-field class="example-full-width">
+              <input matInput placeholder="Long Last Name That Will Be Truncated">
+            </mat-form-field></td>
+          </tr></table>
+          
+          <p>
+            <mat-form-field class="example-full-width">
+              <textarea matInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <textarea matInput placeholder="Address 2"></textarea>
+            </mat-form-field>
+          </p>
+          
+          <table class="example-full-width" cellspacing="0"><tr>
+            <td><mat-form-field class="example-full-width">
+              <input matInput placeholder="City">
+            </mat-form-field></td>
+            <td><mat-form-field class="example-full-width">
+              <input matInput placeholder="State">
+            </mat-form-field></td>
+            <td><mat-form-field class="example-full-width">
+              <input matInput #postalCode maxlength="5" placeholder="Postal Code" value="94043">
+              <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+            </mat-form-field></td>
+          </tr></table>
+        </form>
+      </mat-cell>
+    </ng-container> -->
+    
+    <mat-header-row *matHeaderRowDef="['name', 'type', 'field', 'degree', 'semesterNumber', 'hours', 'options']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name', 'type', 'field', 'degree', 'semesterNumber', 'hours', 'options'];"
+    matRipple 
+    class="element-row"  
+    [class.expanded]="expandedElement === row" 
+    (click)="expandedElement = expandedElement === row? null : row"
+    style="overflow: hidden">
+  </mat-row>
+  <mat-row *matRowDef="let row; columns: ['nameEdit', 'typeEdit', 'fieldEdit', 'degreeEdit', 'semesterNumberEdit', 'hoursEdit', 'optionsEdit']; when: isEditableRow"></mat-row>
+  <!-- <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+    [@detailExpand]="row.element === expandedElement ? 'expanded' : 'collapsed'"
+    style="overflow: hidden"> 
+  </mat-row> -->
+</mat-table>
+<button *ngIf="selectedSemester" class="fab" type="button" mat-fab matTooltip="Dodaj przedmiot" matTooltipPosition="left" (click)="addSubject()"><mat-icon>add</mat-icon></button>
+</div>
